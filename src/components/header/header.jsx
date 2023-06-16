@@ -1,12 +1,14 @@
-import { Button } from 'antd'
+import { Button, Typography } from 'antd'
 import { styled } from 'styled-components'
 
 const Header = () => {
+  const { Title } = Typography
   // import.meta.env.VITE_PUBLIC_WEBSITE
 
   return (
     <Wrapper>
-      Header home page
+      <Title level={1}>Header</Title>
+      {/* Header home page */}
       <Button type='primary'>Button</Button>
       <Button type='primary'>Button</Button>
     </Wrapper>
