@@ -3,7 +3,6 @@ import { styled } from 'styled-components'
 
 const Header = () => {
   const { Title } = Typography
-  // import.meta.env.VITE_PUBLIC_WEBSITE
 
   return (
     <Wrapper>

@@ -1,10 +1,17 @@
-import { ConfigProvider } from 'antd'
-import { theme } from './lib/styles/theme'
+import { App, ConfigProvider } from 'antd'
+
+import { Provider } from 'react-redux'
+import store from '../store'
+import { theme } from '../lib/styles/theme'
 
 const Providers = ({ children }) => {
   return (
     <>
-      <ConfigProvider theme={theme}>{children}</ConfigProvider>
+      <Provider store={store}>
+        <ConfigProvider theme={theme}>
+          <App>{children}</App>
+        </ConfigProvider>
+      </Provider>
     </>
   )
 }
