@@ -1,10 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { customFetch } from '../../lib/axios/customFetch'
-
+import Cookies from 'js-cookie'
 const initialState = {
-  name: '',
+  name: Cookies.get('name') ? Cookies.get('name') : '',
   lastName: '',
   email: '',
+  isMember: Cookies.get('token') ? true : false,
+  role: Cookies.get('role') ? Cookies.get('role') : 'user',
   isLoading: false,
 }
 export const usersThunk = createAsyncThunk(

@@ -1,15 +1,41 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Form, Input } from 'antd'
+import Cookies from 'js-cookie'
 import { styled } from 'styled-components'
 import { Typography } from 'antd'
 import { Link } from 'react-router-dom'
 import { MailOutlined } from '@ant-design/icons'
-
-const Login = () => {
+import { customFetch } from '../../../../lib/axios/customFetch'
+import { App } from 'antd'
+import { useState } from 'react'
+const initialState = {
+  isLoading: false,
+}
+const Register = () => {
+  const [state, setState] = useState(initialState)
   const { Title } = Typography
+  const { notification, message } = App.useApp()
 
-  const onFinish = (values) => {
-    console.log('Received values of form: ', values)
+  const onFinish = async (values) => {
+    try {
+      setState({ ...state, isLoading: true })
+      const response = await customFetch.post('users', values)
+      setState({ ...state, isLoading: false })
+      message.success('Registration Successful!')
+      const { name, role, token } = response.data
+      // set cookies
+      Cookies.set('token', token, { expires: 7 })
+      Cookies.set('name', name, { expires: 7 })
+      Cookies.set('role', role, { expires: 7 })
+      // redirect to home page
+      window.location.href = '/dashboard'
+    } catch (error) {
+      setState({ ...state, isLoading: false })
+      notification.error({
+        message: error?.response?.data?.message || 'Something went wrong!',
+      })
+      console.log(error?.response?.data?.message)
+    }
   }
   return (
     <Wrapper>
@@ -129,6 +155,7 @@ const Login = () => {
             type='primary'
             htmlType='submit'
             className='login-form-button'
+            loading={state.isLoading}
           >
             Register
           </Button>
@@ -159,4 +186,4 @@ const Wrapper = styled.div`
     max-width: 600px;
   }
 `
-export default Login
+export default Register

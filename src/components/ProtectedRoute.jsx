@@ -1,7 +1,8 @@
 import { Navigate } from 'react-router-dom'
 
+import { useSelector } from 'react-redux'
 const ProtectedRoute = ({ children }) => {
-  const isMember = true
+  const { isMember } = useSelector((state) => state.user)
 
   if (isMember === false) {
     return <Navigate to={'/'} />
