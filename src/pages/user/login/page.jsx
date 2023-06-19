@@ -1,14 +1,39 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Form, Input } from 'antd'
 import { styled } from 'styled-components'
+import Cookies from 'js-cookie'
 import { Typography } from 'antd'
 import { Link } from 'react-router-dom'
-
+import { useState } from 'react'
+import { customFetch } from '../../../../lib/axios/customFetch'
+import { App } from 'antd'
+const initialState = {
+  isLoading: false,
+}
 const Login = () => {
+  const [state, setState] = useState(initialState)
+  const { notification } = App.useApp()
+
   const { Title } = Typography
 
-  const onFinish = (values) => {
-    console.log('Received values of form: ', values)
+  const onFinish = async (values) => {
+    setState({ ...state, isLoading: true })
+    try {
+      const response = await customFetch.post('users/login', values)
+      setState({ ...state, isLoading: false })
+      const { name, role, token } = response.data
+      // set cookies for 7 days
+      Cookies.set('token', token, { expires: 7 })
+      Cookies.set('name', name, { expires: 7 })
+      Cookies.set('role', role, { expires: 7 })
+      // redirect to Dashboard page
+      window.location.href = '/dashboard'
+    } catch (error) {
+      setState({ ...state, isLoading: false })
+      notification.error({
+        message: error?.response?.data?.message || 'Something went wrong!',
+      })
+    }
   }
   return (
     <Wrapper>
@@ -22,7 +47,7 @@ const Login = () => {
       >
         <Title level={2}>Login</Title>
         <Form.Item
-          name='username'
+          name='email'
           rules={[
             {
               required: true,
@@ -68,6 +93,7 @@ const Login = () => {
             type='primary'
             htmlType='submit'
             className='login-form-button'
+            loading={state.isLoading}
           >
             Log in
           </Button>
