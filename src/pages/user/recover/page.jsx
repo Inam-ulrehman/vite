@@ -1,14 +1,37 @@
 import { MailOutlined } from '@ant-design/icons'
-import { Button, Form, Input } from 'antd'
+import { App, Button, Form, Input } from 'antd'
 import { styled } from 'styled-components'
 import { Typography } from 'antd'
 import { Link } from 'react-router-dom'
+import { useRef, useState } from 'react'
+import { customFetch } from '../../../../lib/axios/customFetch'
 
+const initialState = {
+  isLoading: false,
+}
 const Login = () => {
+  const [state, setState] = useState(initialState)
+  const formRef = useRef(null)
+  const { notification } = App.useApp()
   const { Title } = Typography
 
-  const onFinish = (values) => {
-    console.log('Received values of form: ', values)
+  const onFinish = async (values) => {
+    try {
+      setState({ ...state, isLoading: true })
+      const response = await customFetch.post('users/recover', values)
+      setState({ ...state, isLoading: false })
+      notification.success({
+        message: response?.data?.message || 'Password reset link sent!',
+      })
+      // reset form fields
+      formRef.current.resetFields()
+    } catch (error) {
+      setState({ ...state, isLoading: false })
+
+      notification.error({
+        message: error?.response?.data?.message || 'Something went wrong!',
+      })
+    }
   }
   return (
     <Wrapper>
@@ -19,6 +42,7 @@ const Login = () => {
           remember: true,
         }}
         onFinish={onFinish}
+        ref={formRef}
       >
         <Title level={2}> Recover Password </Title>
         <Form.Item
@@ -43,6 +67,7 @@ const Login = () => {
             type='primary'
             htmlType='submit'
             className='login-form-button'
+            loading={state.isLoading}
           >
             Submit
           </Button>
