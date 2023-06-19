@@ -5,7 +5,7 @@ const initialState = {
   name: Cookies.get('name') ? Cookies.get('name') : '',
   lastName: '',
   email: '',
-  // isMember: Cookies.get('token') ? true : false,
+  // isMember: Cookies.get('token') ? true : false, test
   isMember: true,
   role: Cookies.get('role') ? Cookies.get('role') : 'user',
   isLoading: false,
