@@ -22,7 +22,7 @@ const RoutesConfig = () => {
           <Route index element={<Login />} />
           <Route path='/register' element={<Register />} />
           <Route path='/recover' element={<Recover />} />
-          <Route path='recover/:token' element={<RecoverPassword />} />
+          <Route path='recoverpassword?' element={<RecoverPassword />} />
           {/* ================>>>>> Public Routes End  */}
           {/* ================>>>>> Protected Dashboard Start  */}
           <Route
