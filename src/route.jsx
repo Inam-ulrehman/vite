@@ -1,6 +1,5 @@
 import { Route, Routes } from 'react-router-dom'
-import Home from './pages/home/page'
-import About from './pages/about/page'
+
 import Dashboard from './pages/dashboard/page'
 import ProtectedRoute from './components/ProtectedRoute'
 import ErrorPage from './pages/errorPage'
@@ -8,6 +7,7 @@ import Layout from './layout'
 import { BrowserRouter as Router } from 'react-router-dom'
 import Profile from './pages/dashboard/profile/page'
 import LayoutDashboard from './pages/dashboard/LayoutDashboard'
+import Login from './pages/user/login/page'
 
 const RoutesConfig = () => {
   return (
@@ -15,8 +15,8 @@ const RoutesConfig = () => {
       <Routes>
         {/* ================>>>>> Layout Start  */}
         <Route path='/' element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path='/about' element={<About />} />
+          {/* ================>>>>> Public Routes  */}
+          <Route index element={<Login />} />
           {/* ================>>>>> Protected Dashboard Start  */}
           <Route
             path='/dashboard'
