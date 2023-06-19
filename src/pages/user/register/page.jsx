@@ -34,7 +34,6 @@ const Register = () => {
       notification.error({
         message: error?.response?.data?.message || 'Something went wrong!',
       })
-      console.log(error?.response?.data?.message)
     }
   }
   return (
