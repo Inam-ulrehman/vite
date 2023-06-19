@@ -4,10 +4,12 @@ import { styled } from 'styled-components'
 import Cookies from 'js-cookie'
 import { Typography } from 'antd'
 import { Link } from 'react-router-dom'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { customFetch } from '../../../../lib/axios/customFetch'
 import { App } from 'antd'
+import ApiLoading from '../../../components/singleComponent/apiLoading'
 const initialState = {
+  checkLoggedIn: true,
   isLoading: false,
 }
 const Login = () => {
@@ -35,6 +37,22 @@ const Login = () => {
       })
     }
   }
+  //  check if user is logged in or not to redirect to dashboard page
+  useEffect(() => {
+    const checkLoggedIn = async () => {
+      const token = Cookies.get('token')
+      if (token) {
+        window.location.href = '/dashboard'
+        setState({ ...state, checkLoggedIn: true })
+      } else {
+        setState({ ...state, checkLoggedIn: false })
+      }
+    }
+    checkLoggedIn()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  if (state.checkLoggedIn) return <ApiLoading />
   return (
     <Wrapper>
       <Form
