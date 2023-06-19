@@ -1,5 +1,5 @@
-import { LockOutlined, UserOutlined } from '@ant-design/icons'
-import { Button, Checkbox, Form, Input } from 'antd'
+import { MailOutlined } from '@ant-design/icons'
+import { Button, Form, Input } from 'antd'
 import { styled } from 'styled-components'
 import { Typography } from 'antd'
 import { Link } from 'react-router-dom'
@@ -20,45 +20,21 @@ const Login = () => {
         }}
         onFinish={onFinish}
       >
-        <Title level={2}>Login</Title>
+        <Title level={2}> Recover Password </Title>
         <Form.Item
-          name='username'
+          name='email'
           rules={[
             {
               required: true,
-              message: 'Please input your Username!',
+              message: 'Please input your Email!',
             },
           ]}
         >
           <Input
-            prefix={<UserOutlined className='site-form-item-icon' />}
-            placeholder='Username'
+            prefix={<MailOutlined className='site-form-item-icon' />}
+            placeholder='Please enter your email address'
             type='email'
           />
-        </Form.Item>
-        <Form.Item
-          name='password'
-          rules={[
-            {
-              required: true,
-              message: 'Please input your Password!',
-            },
-          ]}
-        >
-          <Input
-            prefix={<LockOutlined className='site-form-item-icon' />}
-            type='password'
-            placeholder='Password'
-          />
-        </Form.Item>
-        <Form.Item>
-          <Form.Item name='remember' valuePropName='checked' noStyle>
-            <Checkbox>Remember me</Checkbox>
-          </Form.Item>
-
-          <Link className='login-form-forgot' to='/recover'>
-            Forgot password
-          </Link>
         </Form.Item>
 
         <Form.Item>
@@ -67,9 +43,9 @@ const Login = () => {
             htmlType='submit'
             className='login-form-button'
           >
-            Log in
+            Submit
           </Button>
-          Or <Link to='/register'>register now!</Link>
+          Or <Link to='/register'>Login now!</Link>
         </Form.Item>
       </Form>
     </Wrapper>

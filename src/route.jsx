@@ -8,6 +8,8 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import Profile from './pages/dashboard/profile/page'
 import LayoutDashboard from './pages/dashboard/LayoutDashboard'
 import Login from './pages/user/login/page'
+import Register from './pages/user/register/page'
+import Recover from './pages/user/recover/page'
 
 const RoutesConfig = () => {
   return (
@@ -17,6 +19,8 @@ const RoutesConfig = () => {
         <Route path='/' element={<Layout />}>
           {/* ================>>>>> Public Routes  */}
           <Route index element={<Login />} />
+          <Route path='/register' element={<Register />} />
+          <Route path='/recover' element={<Recover />} />
           {/* ================>>>>> Protected Dashboard Start  */}
           <Route
             path='/dashboard'
