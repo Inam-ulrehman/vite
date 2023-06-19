@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom'
 
 const ProtectedRoute = ({ children }) => {
-  const isMember = false
+  const isMember = true
 
   if (isMember === false) {
     return <Navigate to={'/'} />
