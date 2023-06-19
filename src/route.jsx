@@ -10,6 +10,7 @@ import LayoutDashboard from './pages/dashboard/LayoutDashboard'
 import Login from './pages/user/login/page'
 import Register from './pages/user/register/page'
 import Recover from './pages/user/recover/page'
+import RecoverPassword from './pages/user/recoverpassword/page'
 
 const RoutesConfig = () => {
   return (
@@ -21,6 +22,8 @@ const RoutesConfig = () => {
           <Route index element={<Login />} />
           <Route path='/register' element={<Register />} />
           <Route path='/recover' element={<Recover />} />
+          <Route path='recover/:token' element={<RecoverPassword />} />
+          {/* ================>>>>> Public Routes End  */}
           {/* ================>>>>> Protected Dashboard Start  */}
           <Route
             path='/dashboard'
