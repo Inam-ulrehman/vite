@@ -34,6 +34,7 @@ const Login = () => {
             prefix={<UserOutlined className='site-form-item-icon' />}
             placeholder='Username'
             type='email'
+            size='large'
           />
         </Form.Item>
         <Form.Item
@@ -49,6 +50,7 @@ const Login = () => {
             prefix={<LockOutlined className='site-form-item-icon' />}
             type='password'
             placeholder='Password'
+            size='large'
           />
         </Form.Item>
         <Form.Item>

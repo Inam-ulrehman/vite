@@ -34,6 +34,7 @@ const Login = () => {
             prefix={<MailOutlined className='site-form-item-icon' />}
             placeholder='Please enter your email address'
             type='email'
+            size='large'
           />
         </Form.Item>
 
@@ -45,7 +46,7 @@ const Login = () => {
           >
             Submit
           </Button>
-          Or <Link to='/register'>Login now!</Link>
+          Or <Link to='/'>Login now!</Link>
         </Form.Item>
       </Form>
     </Wrapper>

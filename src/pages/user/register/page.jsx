@@ -34,6 +34,7 @@ const Login = () => {
           <Input
             prefix={<UserOutlined className='site-form-item-icon' />}
             placeholder='Name'
+            size='large'
           />
         </Form.Item>
         <Form.Item
@@ -49,6 +50,7 @@ const Login = () => {
             prefix={<MailOutlined className='site-form-item-icon' />}
             placeholder='Email'
             type='email'
+            size='large'
           />
         </Form.Item>
         <Form.Item
