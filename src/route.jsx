@@ -15,6 +15,7 @@ import Admin from './pages/dashboard/admin/page'
 import ProtectedAdminRoute from './pages/dashboard/admin/ProtectedAdminRoute'
 import AdminUsers from './pages/dashboard/admin/users/page'
 import LayoutAdminDashboard from './pages/dashboard/admin/LayoutAdminDashboard'
+import ContactSubmissions from './pages/dashboard/admin/contact/page'
 
 const RoutesConfig = () => {
   return (
@@ -51,6 +52,10 @@ const RoutesConfig = () => {
             >
               <Route index element={<Admin />} />
               <Route path='/dashboard/admin/users' element={<AdminUsers />} />
+              <Route
+                path='/dashboard/admin/contact-submissions'
+                element={<ContactSubmissions />}
+              />
             </Route>
             {/* ================>>>>> Protected Admin Dashboard End  */}
           </Route>

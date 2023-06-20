@@ -1,11 +1,12 @@
 import {
-  AppstoreOutlined,
   DashboardOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   SettingOutlined,
+  UserOutlined,
 } from '@ant-design/icons'
 import { Button, Menu } from 'antd'
+import Cookies from 'js-cookie'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -18,14 +19,15 @@ const items = [
   {
     label: <Link to='/dashboard/profile'>Profile</Link>,
     key: 'profile',
-    icon: <AppstoreOutlined />,
+    icon: <UserOutlined />,
     // disabled: true,
   },
-  {
+]
+if (Cookies.get('role') === 'admin') {
+  items.push({
     label: 'Admin',
     key: 'SubMenu',
     icon: <SettingOutlined />,
-
     children: [
       {
         label: <Link to='/dashboard/admin'>Home</Link>,
@@ -35,17 +37,17 @@ const items = [
         label: <Link to='/dashboard/admin/users'>Users</Link>,
         key: 'setting:2',
       },
+      {
+        label: (
+          <Link to='/dashboard/admin/contact-submissions'>
+            Contact Submissions
+          </Link>
+        ),
+        key: 'setting:3',
+      },
     ],
-  },
-  {
-    label: (
-      <a href='https://ant.design' target='_blank' rel='noopener noreferrer'>
-        Navigation Four - Link
-      </a>
-    ),
-    key: 'alipay',
-  },
-]
+  })
+}
 const DesktopMenu = () => {
   const [collapsed, setCollapsed] = useState(false)
   const toggleCollapsed = () => {
