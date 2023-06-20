@@ -137,7 +137,7 @@ const Wrapper = styled.div`
     border-radius: 0.5rem;
   }
   @media (max-width: 768px) {
-    margin-top: 2rem;
+    margin-top: 6rem;
   }
 
   @media (min-width: 768px) {
