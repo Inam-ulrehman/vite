@@ -1,8 +1,8 @@
 import { Button } from 'antd'
-import { Link } from 'react-router-dom'
 import { styled } from 'styled-components'
 import Cookies from 'js-cookie'
 import DesktopMenu from './menu'
+import { LogoutOutlined } from '@ant-design/icons'
 
 const DesktopNavbar = () => {
   const handleLogout = () => {
@@ -14,7 +14,11 @@ const DesktopNavbar = () => {
   return (
     <Wrapper>
       <DesktopMenu />
-      <Button onClick={handleLogout}>Log</Button>
+      <Button
+        style={{ width: `100%` }}
+        onClick={handleLogout}
+        icon={<LogoutOutlined />}
+      ></Button>
     </Wrapper>
   )
 }
