@@ -27,6 +27,7 @@ const Wrapper = styled.div`
   }
   .layout {
     min-height: 100vh;
+    width: 100%;
   }
 
   /* Mobile  */
@@ -47,6 +48,7 @@ const Wrapper = styled.div`
   /* Desktop & ipad & laptop */
   @media (min-width: 768px) {
     display: flex;
+
     .desktop {
       min-height: 100%;
       border-right: 1px solid #ccc;
