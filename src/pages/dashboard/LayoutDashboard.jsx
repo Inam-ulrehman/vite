@@ -25,6 +25,9 @@ const Wrapper = styled.div`
   a {
     margin-right: 10px;
   }
+  .layout {
+    min-height: 100vh;
+  }
 
   /* Mobile  */
   @media (max-width: 768px) {
