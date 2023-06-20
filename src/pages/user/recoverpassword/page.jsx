@@ -1,15 +1,19 @@
 import { LockOutlined } from '@ant-design/icons'
 import { Button, Form, Input } from 'antd'
-// eslint-disable-next-line no-unused-vars
+
 import Cookies from 'js-cookie'
 import { styled } from 'styled-components'
 import { Typography } from 'antd'
 
 import { customFetch } from '../../../../lib/axios/customFetch'
 import { App } from 'antd'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import ApiLoading from '../../../components/singleComponent/apiLoading'
+import InvalidToken from './invalidToken'
 const initialState = {
   isLoading: false,
+  isTokenValid: false,
+  tokenLoading: true,
 }
 const RecoverPassword = () => {
   const [state, setState] = useState(initialState)
@@ -21,29 +25,62 @@ const RecoverPassword = () => {
   const onFinish = async (values) => {
     try {
       setState({ ...state, isLoading: true })
-      const response = await customFetch.post('users', values, {
+      const response = await customFetch.put('users/reset', values, {
         headers: {
           Authorization: `Bearer ${url_token}`,
         },
       })
       setState({ ...state, isLoading: false })
       message.success('Password Changed Successfully!')
-      console.log(response)
-      // const { name, role, token } = response.data
+
+      const { name, role, token } = response.data
       // set cookies
-      // Cookies.set('token', token, { expires: 7 })
-      // Cookies.set('name', name, { expires: 7 })
-      // Cookies.set('role', role, { expires: 7 })
+      Cookies.set('token', token, { expires: 7 })
+      Cookies.set('name', name, { expires: 7 })
+      Cookies.set('role', role, { expires: 7 })
       // redirect to home page
-      // window.location.href = '/dashboard'
+      window.location.href = '/dashboard'
     } catch (error) {
-      console.log(error?.response?.data?.message)
-      setState({ ...state, isLoading: false })
+      // console.log(error?.response?.data?.message)
+      setState({ ...state, isLoading: false, isTokenValid: false })
       notification.error({
         message: error?.response?.data?.message || 'Something went wrong!',
       })
     }
   }
+
+  // check token is valid
+  // if valid then show form
+  // else show error message
+
+  useEffect(() => {
+    const checkToken = async () => {
+      try {
+        await customFetch.get('authenticateUserToken', {
+          headers: {
+            Authorization: `Bearer ${url_token}`,
+          },
+        })
+
+        setState({ ...state, tokenLoading: false, isTokenValid: true })
+      } catch (error) {
+        setState({ ...state, tokenLoading: false, isTokenValid: false })
+      }
+    }
+    checkToken()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  // loading
+  if (state.tokenLoading) {
+    return <ApiLoading />
+  }
+  // if token is not valid
+
+  if (!state.isTokenValid) {
+    return <InvalidToken />
+  }
+
   return (
     <Wrapper>
       <Form
