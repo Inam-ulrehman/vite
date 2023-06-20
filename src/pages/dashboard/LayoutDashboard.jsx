@@ -1,27 +1,22 @@
-import { Button } from 'antd'
-import Cookies from 'js-cookie'
-import { Link, Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 import { styled } from 'styled-components'
+import DesktopNavbar from './components/desktopNavbar/desktopNavbar'
+import MobileNavbar from './components/mobileNavbar/mobileNavbar'
 
 const LayoutDashboard = () => {
-  const handleLogout = () => {
-    Cookies.remove('token')
-    Cookies.remove('name')
-    Cookies.remove('role')
-    window.location.href = '/'
-  }
   return (
     <Wrapper>
-      <div className=''>
-        <Link to='/dashboard'>Dashboard</Link>
-        <Link to='/dashboard/profile'>Profile</Link>
-        <Link to='/dashboard/admin'>Admin</Link>
-        <Link to='/dashboard/admin/users'>Users</Link>
-        <Button onClick={handleLogout} type='primary'>
-          Log Out
-        </Button>
+      <div className='navbar'>
+        <div className='desktop'>
+          <DesktopNavbar />
+        </div>
+        <div className='mobile'>
+          <MobileNavbar />
+        </div>
       </div>
-      <Outlet />
+      <div className='layout'>
+        <Outlet />
+      </div>
     </Wrapper>
   )
 }
@@ -29,6 +24,34 @@ const LayoutDashboard = () => {
 const Wrapper = styled.div`
   a {
     margin-right: 10px;
+  }
+
+  /* Mobile  */
+  @media (max-width: 768px) {
+    .navbar {
+      // how to make it sticky on mobile
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background-color: #fff;
+      border-bottom: 1px solid #ccc;
+    }
+    .desktop {
+      display: none;
+    }
+  }
+
+  /* Desktop & ipad & laptop */
+  @media (min-width: 768px) {
+    display: flex;
+    .desktop {
+      min-height: 100%;
+      border-right: 1px solid #ccc;
+    }
+
+    .Mobile {
+      display: none;
+    }
   }
 `
 export default LayoutDashboard
