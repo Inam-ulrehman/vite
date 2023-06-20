@@ -4,6 +4,7 @@ import {
   MenuUnfoldOutlined,
   SettingOutlined,
   UserOutlined,
+  LogoutOutlined,
 } from '@ant-design/icons'
 import { Button, Menu } from 'antd'
 import Cookies from 'js-cookie'
@@ -48,10 +49,23 @@ if (Cookies.get('role') === 'admin') {
     ],
   })
 }
+items.push({
+  label: <Link to='/'>LogOut</Link>,
+  key: 'logout',
+  icon: <LogoutOutlined />,
+  // disabled: true,
+})
 const DesktopMenu = () => {
   const [collapsed, setCollapsed] = useState(false)
   const toggleCollapsed = () => {
     setCollapsed(!collapsed)
+  }
+  const handleClose = (e) => {
+    if (e.key === 'logout') {
+      Cookies.remove('token')
+      Cookies.remove('role')
+      Cookies.remove('name')
+    }
   }
   return (
     <div style={{ width: collapsed ? 50 : 256 }}>
@@ -72,7 +86,7 @@ const DesktopMenu = () => {
         theme='light'
         inlineCollapsed={collapsed}
         items={items}
-        onClick={(e) => console.log(e)}
+        onClick={handleClose}
       />
     </div>
   )
