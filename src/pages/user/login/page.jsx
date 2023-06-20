@@ -85,7 +85,8 @@ const Login = () => {
           rules={[
             {
               required: true,
-              message: 'Please input your Password!',
+              message: 'Minimum 8 characters password is required!',
+              min: 8,
             },
           ]}
         >
