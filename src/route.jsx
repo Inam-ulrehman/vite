@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 
 import Dashboard from './pages/dashboard/page'
-import ProtectedRoute from './components/singleComponent/ProtectedRoute'
+import ProtectedRoute from './pages/dashboard/ProtectedRoute'
 import ErrorPage from './pages/errorPage'
 import Layout from './layout'
 import { BrowserRouter as Router } from 'react-router-dom'
@@ -12,7 +12,7 @@ import Register from './pages/user/register/page'
 import Recover from './pages/user/recover/page'
 import RecoverPassword from './pages/user/recoverpassword/page'
 import Admin from './pages/dashboard/admin/page'
-import ProtectedAdminRoute from './components/singleComponent/ProtectedAdminRoute'
+import ProtectedAdminRoute from './pages/dashboard/admin/ProtectedAdminRoute'
 import AdminUsers from './pages/dashboard/admin/users/page'
 import LayoutAdminDashboard from './pages/dashboard/admin/LayoutAdminDashboard'
 
