@@ -2,6 +2,7 @@ import { Button } from 'antd'
 import { Link } from 'react-router-dom'
 import { styled } from 'styled-components'
 import Cookies from 'js-cookie'
+import DesktopMenu from './menu'
 
 const DesktopNavbar = () => {
   const handleLogout = () => {
@@ -12,13 +13,8 @@ const DesktopNavbar = () => {
   }
   return (
     <Wrapper>
-      <Link to='/dashboard'>Dashboard</Link>
-      <Link to='/dashboard/profile'>Profile</Link>
-      <Link to='/dashboard/admin'>Admin</Link>
-      <Link to='/dashboard/admin/users'>Users</Link>
-      <Button onClick={handleLogout} type='primary'>
-        Log Out
-      </Button>
+      <DesktopMenu />
+      <Button onClick={handleLogout}>Log</Button>
     </Wrapper>
   )
 }

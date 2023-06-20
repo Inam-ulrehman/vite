@@ -49,7 +49,7 @@ const Wrapper = styled.div`
       border-right: 1px solid #ccc;
     }
 
-    .Mobile {
+    .mobile {
       display: none;
     }
   }
