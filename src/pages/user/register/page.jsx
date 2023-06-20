@@ -168,10 +168,11 @@ const Register = () => {
 const Wrapper = styled.div`
   /* place grid in center */
   display: grid;
-  min-height: 100vh;
+
   place-items: center;
   max-width: 90vw;
   margin: 0 auto;
+
   .ant-form {
     width: 100%;
     border: 1px solid #ccc;
@@ -179,10 +180,12 @@ const Wrapper = styled.div`
     border-radius: 0.5rem;
   }
   @media (max-width: 768px) {
+    margin-top: 6rem;
   }
 
   @media (min-width: 768px) {
     max-width: 600px;
+    min-height: 100vh;
   }
 `
 export default Register
