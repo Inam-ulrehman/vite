@@ -28,7 +28,7 @@ const Profile = () => (
           },
         ]}
       >
-        <Input />
+        <Input size='large' />
       </Form.Item>
 
       <Form.Item
@@ -41,11 +41,16 @@ const Profile = () => (
           },
         ]}
       >
-        <Input.Password />
+        <Input.Password size='large' />
       </Form.Item>
 
       <Form.Item>
-        <Button className='update' type='primary' htmlType='submit'>
+        <Button
+          className='update'
+          type='primary'
+          htmlType='submit'
+          size='large'
+        >
           Update
         </Button>
       </Form.Item>

@@ -13,7 +13,12 @@ const MobileNavbar = () => {
   }
   return (
     <Wrapper>
-      <Button type='primary' onClick={showDrawer} icon={<MenuOutlined />}>
+      <Button
+        type='primary'
+        onClick={showDrawer}
+        icon={<MenuOutlined />}
+        size='large'
+      >
         Menu
       </Button>
       <Drawer
