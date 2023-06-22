@@ -23,7 +23,7 @@ const MobileNumberForm = () => {
         setState({ ...state, error: '' })
       }
     }
-  }, [value])
+  }, [value, state])
   return (
     <Wrapper>
       <Form.Item label='Mobile'>
