@@ -23,7 +23,8 @@ const MobileNumberForm = () => {
         setState({ ...state, error: '' })
       }
     }
-  }, [value, state])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value])
   return (
     <Wrapper>
       <Form.Item label='Mobile'>
