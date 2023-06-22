@@ -1,6 +1,7 @@
 import { Button, Form, Input } from 'antd'
 import { styled } from 'styled-components'
 import FormMobile from './form-mobile'
+import Gender from './form-gender'
 const onFinish = (values) => {
   console.log('Success:', values)
 }
@@ -49,8 +50,11 @@ const Profile = () => (
       >
         <Input size='large' type='email' />
       </Form.Item>
+      {/* mobile */}
       <FormMobile />
 
+      {/* Gender */}
+      <Gender />
       <Form.Item>
         <Button
           className='update'
