@@ -1,7 +1,7 @@
 import { MenuOutlined } from '@ant-design/icons'
 import { Button, Drawer } from 'antd'
 import { useState } from 'react'
-import MobileMenu from './menu'
+import MobileMenu from './mobileMenu'
 import { styled } from 'styled-components'
 const MobileNavbar = () => {
   const [open, setOpen] = useState(false)

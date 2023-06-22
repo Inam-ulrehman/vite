@@ -1,6 +1,5 @@
 import { styled } from 'styled-components'
-
-import DesktopMenu from './menu'
+import DesktopMenu from './desktopMenu'
 
 const DesktopNavbar = () => {
   return (

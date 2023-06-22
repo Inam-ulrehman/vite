@@ -5,7 +5,7 @@ import { styled } from 'styled-components'
 const DateOfBirth = () => {
   const handleDateChange = (date, dateString) => {
     const selectedDate = moment(dateString, 'YYYY-MM-DD').toDate()
-    // console.log(selectedDate)
+    console.log(selectedDate)
     // You can now save `selectedDate` as a MongoDB Date object
   }
 
