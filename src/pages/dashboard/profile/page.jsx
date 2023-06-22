@@ -95,7 +95,8 @@ const Wrapper = styled.div`
   @media (min-width: 768px) {
     input,
     .ant-input-password,
-    .ant-select {
+    .ant-select,
+    .mobile-input {
       max-width: 400px;
     }
     .ant-form {
