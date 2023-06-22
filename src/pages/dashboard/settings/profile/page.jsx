@@ -1,6 +1,5 @@
 import { Button, Form, Input } from 'antd'
 import { styled } from 'styled-components'
-import FormMobile from './form-mobile'
 import Gender from './form-gender'
 import DateOfBirth from './form-dob'
 const onFinish = (values) => {
@@ -38,22 +37,6 @@ const Profile = () => (
       <Form.Item label='Last Name' name='lastName'>
         <Input size='large' />
       </Form.Item>
-      {/* email */}
-      <Form.Item
-        label='Email'
-        name='email'
-        rules={[
-          {
-            required: true,
-            message: 'Please input your Email!',
-          },
-        ]}
-      >
-        <Input size='large' type='email' />
-      </Form.Item>
-
-      {/* mobile */}
-      <FormMobile />
 
       {/* Gender */}
       <Gender />
@@ -113,8 +96,7 @@ const Wrapper = styled.div`
 
     .ant-form {
       max-width: 600px;
-      margin: 0 auto;
-      margin-top: 2rem;
+      margin: 2rem auto;
     }
   }
 `
