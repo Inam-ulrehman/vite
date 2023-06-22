@@ -17,9 +17,27 @@ const items = [
     icon: <DashboardOutlined />,
   },
   {
-    label: <Link to='/dashboard/profile'>Profile</Link>,
-    key: 'profile',
-    icon: <UserOutlined />,
+    label: 'Settings',
+    key: 'settings',
+    icon: <SettingOutlined />,
+    children: [
+      {
+        label: <Link to='/dashboard/settings/profile'>Profile</Link>,
+        key: 'settings:profile',
+      },
+      {
+        label: (
+          <Link to='/dashboard/settings/contact-details'>Contact Details</Link>
+        ),
+        key: 'settings:contact-details',
+      },
+      {
+        label: (
+          <Link to='/dashboard/settings/change-password'>Change Password</Link>
+        ),
+        key: 'settings:change-password',
+      },
+    ],
     // disabled: true,
   },
 ]
@@ -29,7 +47,7 @@ if (Cookies.get('role') === 'admin') {
   items.push({
     label: 'Admin',
     key: 'SubMenu',
-    icon: <SettingOutlined />,
+    icon: <UserOutlined />,
     children: [
       {
         label: <Link to='/dashboard/admin'>Home</Link>,
