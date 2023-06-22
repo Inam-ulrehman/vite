@@ -2,6 +2,7 @@ import { Button, Form, Input } from 'antd'
 import { styled } from 'styled-components'
 import FormMobile from './form-mobile'
 import Gender from './form-gender'
+import DateOfBirth from './form-dob'
 const onFinish = (values) => {
   console.log('Success:', values)
 }
@@ -50,11 +51,16 @@ const Profile = () => (
       >
         <Input size='large' type='email' />
       </Form.Item>
+
       {/* mobile */}
       <FormMobile />
 
       {/* Gender */}
       <Gender />
+
+      {/* Date Of Birth */}
+      <DateOfBirth />
+
       <Form.Item>
         <Button
           className='update'
@@ -100,9 +106,11 @@ const Wrapper = styled.div`
     input,
     .ant-input-password,
     .ant-select,
-    .mobile-input {
+    .mobile-input,
+    .ant-picker {
       max-width: 400px;
     }
+
     .ant-form {
       max-width: 600px;
       margin: 0 auto;
