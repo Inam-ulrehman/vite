@@ -5,7 +5,7 @@ import ProtectedRoute from './pages/dashboard/ProtectedRoute'
 import ErrorPage from './pages/errorPage'
 import Layout from './layout'
 import { BrowserRouter as Router } from 'react-router-dom'
-import Profile from './pages/dashboard/profile/page'
+import Profile from './pages/dashboard/settings/profile/page'
 import LayoutDashboard from './pages/dashboard/LayoutDashboard'
 import Login from './pages/user/login/page'
 import Register from './pages/user/register/page'
@@ -16,6 +16,10 @@ import ProtectedAdminRoute from './pages/dashboard/admin/ProtectedAdminRoute'
 import AdminUsers from './pages/dashboard/admin/users/page'
 import LayoutAdminDashboard from './pages/dashboard/admin/LayoutAdminDashboard'
 import ContactSubmissions from './pages/dashboard/admin/contact/page'
+import ContactDetails from './pages/dashboard/settings/contact-details/page'
+import ChangePassword from './pages/dashboard/settings/change-password/page'
+
+// ==================>>>>>> Routes Config
 
 const RoutesConfig = () => {
   return (
@@ -39,7 +43,15 @@ const RoutesConfig = () => {
             }
           >
             <Route index element={<Dashboard />} />
-            <Route path='/dashboard/profile' element={<Profile />} />
+            <Route path='/dashboard/settings/profile' element={<Profile />} />
+            <Route
+              path='/dashboard/settings/contact-details'
+              element={<ContactDetails />}
+            />
+            <Route
+              path='/dashboard/settings/change-password'
+              element={<ChangePassword />}
+            />
 
             {/* ================>>>>> Protected Admin Dashboard Start  */}
             <Route

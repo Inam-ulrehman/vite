@@ -1,5 +1,5 @@
 import { Form, Select } from 'antd'
-import { capitalizeFirstLetter } from '../../../../lib/helper'
+import { capitalizeFirstLetter } from '../../../../../lib/helper'
 import { useState } from 'react'
 
 const Gender = () => {
