@@ -5,7 +5,7 @@ import DateOfBirth from './form-dob'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { customFetch } from '../../../../../lib/axios/customFetch'
-import ApiLoading from '../../../../components/singleComponent/apiLoading'
+import Loading from './loading'
 
 const initialState = {
   name: '',
@@ -64,7 +64,13 @@ const Profile = () => {
     getData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  if (state.isLoading) return <ApiLoading />
+
+  if (state.isLoading)
+    return (
+      <Wrapper>
+        <Loading />
+      </Wrapper>
+    )
   return (
     <Wrapper>
       <Form
