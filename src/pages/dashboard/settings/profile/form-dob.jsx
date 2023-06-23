@@ -11,9 +11,11 @@ const DateOfBirth = ({ state, setState }) => {
     <Wrapper>
       <Form.Item label='Date Of Birth'>
         <DatePicker
-          value={state.dob ? moment(state.dob) : ''}
+          value={state.dob ? moment(state.dob, 'YYYY-MM-DD') : null}
           onChange={handleDateChange}
           size='large'
+          picker='date'
+          placement='bottomLeft'
         />
       </Form.Item>
     </Wrapper>
@@ -24,4 +26,5 @@ const Wrapper = styled.div`
     width: 100%;
   }
 `
+
 export default DateOfBirth

@@ -22,7 +22,7 @@ const Profile = () => {
     try {
       setState({ ...state, updateLoading: true })
       const response = await customFetch.put('users/profile', state)
-
+      console.log(state)
       setState({ ...state, updateLoading: false })
       notification.success({
         message: 'Success',
@@ -52,6 +52,7 @@ const Profile = () => {
         const { name, lastName, gender, dob } = response.data.result
 
         setState({ ...state, name, lastName, gender, dob, isLoading: false })
+        console.log(dob)
       } catch (error) {
         setState({ ...state, isLoading: false })
         notification.error({
@@ -128,6 +129,7 @@ const Profile = () => {
 }
 
 const Wrapper = styled.div`
+  min-height: 150vh;
   .ant-form {
     width: 100%;
     border: 1px solid #ccc;
@@ -169,4 +171,5 @@ const Wrapper = styled.div`
     }
   }
 `
+
 export default Profile
