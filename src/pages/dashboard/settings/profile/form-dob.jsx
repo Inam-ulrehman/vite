@@ -2,17 +2,19 @@ import { Form, DatePicker } from 'antd'
 import moment from 'moment'
 import { styled } from 'styled-components'
 
-const DateOfBirth = () => {
+const DateOfBirth = ({ state, setState }) => {
   const handleDateChange = (date, dateString) => {
-    const selectedDate = moment(dateString, 'YYYY-MM-DD').toDate()
-    console.log(selectedDate)
-    // You can now save `selectedDate` as a MongoDB Date object
+    setState({ ...state, dob: dateString })
   }
 
   return (
     <Wrapper>
       <Form.Item label='Date Of Birth'>
-        <DatePicker onChange={handleDateChange} size='large' />
+        <DatePicker
+          value={state.dob ? moment(state.dob) : ''}
+          onChange={handleDateChange}
+          size='large'
+        />
       </Form.Item>
     </Wrapper>
   )

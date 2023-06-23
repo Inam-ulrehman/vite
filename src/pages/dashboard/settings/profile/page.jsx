@@ -1,18 +1,22 @@
-import { Button, Form, Input } from 'antd'
+import { App, Button, Form, Input } from 'antd'
 import { styled } from 'styled-components'
 import Gender from './form-gender'
 import DateOfBirth from './form-dob'
 import { useState } from 'react'
 import { useEffect } from 'react'
+import { customFetch } from '../../../../../lib/axios/customFetch'
+import ApiLoading from '../../../../components/singleComponent/apiLoading'
 
 const initialState = {
   name: '',
   lastName: '',
   gender: '',
   dob: '',
+  isLoading: false,
 }
 const Profile = () => {
   const [state, setState] = useState(initialState)
+  const { notification } = App.useApp()
   const onFinish = (values) => {
     console.log('Success:', values)
   }
@@ -22,10 +26,28 @@ const Profile = () => {
   const handleChange = (e) => {
     setState({ ...state, [e.target.name]: e.target.value })
   }
-  useEffect(() => {
-    console.log(state)
-  }, [state])
 
+  // get data from server and set it to state
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        setState({ ...state, isLoading: true })
+        const response = await customFetch('users/profile')
+        const { name, lastName, gender, dob } = response.data.result
+
+        setState({ ...state, name, lastName, gender, dob, isLoading: false })
+      } catch (error) {
+        setState({ ...state, isLoading: false })
+        notification.error({
+          message: 'Error',
+          description: error?.response?.data?.message || 'Something went wrong',
+        })
+      }
+    }
+    getData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  if (state.isLoading) return <ApiLoading />
   return (
     <Wrapper>
       <Form
@@ -33,12 +55,16 @@ const Profile = () => {
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         autoComplete='off'
+        initialValues={{ ...state }}
       >
         <h1>Profile</h1>
+
         {/* name */}
         <Form.Item
           label='Name'
           name='name'
+          // how to add initial value to form item
+
           rules={[
             {
               required: true,
