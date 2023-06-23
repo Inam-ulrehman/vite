@@ -4,21 +4,16 @@ import FormMobile from './form-mobile'
 import { useState } from 'react'
 import GooglePlacesHook from './googlePlacesHook'
 
-const onFinish = (values) => {
-  console.log('Success:', values)
-}
-const onFinishFailed = (errorInfo) => {
-  console.log('Failed:', errorInfo)
-}
 const initialStates = {
+  email: '',
+  mobile: '',
   apartment: '',
   house: '',
   street: '',
   city: '',
+  province: '',
   country: '',
   postalCode: '',
-  province: '',
-  region: '',
   location: {
     type: 'Point',
     coordinates: [],
@@ -26,58 +21,137 @@ const initialStates = {
 }
 const ContactDetails = () => {
   const [state, setState] = useState(initialStates)
+  const handleSubmit = (e) => {
+    e.preventDefault()
+  }
+  const handleChange = (e) => {
+    setState({ ...state, [e.target.name]: e.target.value })
+  }
   return (
     <Wrapper>
-      <Form
-        name='basic'
-        initialValues={{
-          remember: true,
-        }}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-        autoComplete='off'
-      >
+      <Form onSubmit={handleSubmit}>
         <h1>Contact Details</h1>
         {/* email */}
-        <Form.Item
-          label='Email'
-          name='email'
-          rules={[
-            {
-              required: true,
-              message: 'Please input your Email!',
-            },
-          ]}
-        >
-          <Input size='large' type='email' />
-        </Form.Item>
-        {/* mobile */}
-        <FormMobile />
-
-        {/* address */}
-        <Form.Item
-          label='Address'
-          name='address'
-          rules={[
-            {
-              required: true,
-              message: 'Please input your Address!',
-            },
-          ]}
-        >
-          <GooglePlacesHook state={state} setState={setState} />
-        </Form.Item>
-
-        <Form.Item>
-          <Button
-            className='update'
-            type='primary'
-            htmlType='submit'
-            size='large'
+        <div>
+          <Form.Item
+            label='Email'
+            name='email'
+            rules={[
+              {
+                required: true,
+                message: 'Please input your email!',
+              },
+            ]}
           >
-            Update
-          </Button>
-        </Form.Item>
+            <Input
+              size='large'
+              type='email'
+              value={state.email}
+              name='email'
+              onChange={handleChange}
+              required
+            />
+          </Form.Item>
+        </div>
+        {/* mobile */}
+        <FormMobile state={state} setState={setState} />
+
+        {/* Search Address */}
+        <div>
+          <Form.Item label='Search Address'>
+            <GooglePlacesHook state={state} setState={setState} />
+          </Form.Item>
+        </div>
+        {/* apartment */}
+        <div>
+          <Form.Item label='Apartment'>
+            <Input
+              size='large'
+              type='text'
+              value={state.apartment}
+              name='apartment'
+              onChange={handleChange}
+            />
+          </Form.Item>
+        </div>
+        {/* house */}
+        <div>
+          <Form.Item label='House'>
+            <Input
+              size='large'
+              type='text'
+              value={state.house}
+              name='house'
+              onChange={handleChange}
+            />
+          </Form.Item>
+        </div>
+        {/* street */}
+        <div>
+          <Form.Item label='Street'>
+            <Input
+              size='large'
+              type='text'
+              value={state.street}
+              name='street'
+              onChange={handleChange}
+            />
+          </Form.Item>
+        </div>
+        {/* city */}
+        <div>
+          <Form.Item label='City'>
+            <Input
+              size='large'
+              type='text'
+              value={state.city}
+              name='city'
+              onChange={handleChange}
+            />
+          </Form.Item>
+        </div>
+        {/* province */}
+        <div>
+          <Form.Item label='Province'>
+            <Input
+              size='large'
+              type='text'
+              value={state.province}
+              name='province'
+              onChange={handleChange}
+            />
+          </Form.Item>
+        </div>
+        {/* country */}
+        <div>
+          <Form.Item label='Country'>
+            <Input
+              size='large'
+              type='text'
+              value={state.country}
+              name='country'
+              onChange={handleChange}
+            />
+          </Form.Item>
+        </div>
+        {/* postalCode */}
+        <div>
+          <Form.Item label='Postal Code'>
+            <Input
+              size='large'
+              type='text'
+              value={state.postalCode}
+              name='postalCode'
+              onChange={handleChange}
+            />
+          </Form.Item>
+        </div>
+
+        {/* update */}
+
+        <Button type='primary' htmlType='submit'>
+          Update
+        </Button>
       </Form>
     </Wrapper>
   )
@@ -125,4 +199,5 @@ const Wrapper = styled.div`
     }
   }
 `
+
 export default ContactDetails
