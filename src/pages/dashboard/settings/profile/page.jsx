@@ -13,12 +13,28 @@ const initialState = {
   gender: '',
   dob: '',
   isLoading: false,
+  updateLoading: false,
 }
 const Profile = () => {
   const [state, setState] = useState(initialState)
   const { notification } = App.useApp()
-  const onFinish = (values) => {
-    console.log('Success:', values)
+  const onFinish = async () => {
+    try {
+      setState({ ...state, updateLoading: true })
+      const response = await customFetch.put('users/profile', state)
+
+      setState({ ...state, updateLoading: false })
+      notification.success({
+        message: 'Success',
+        description: response?.data?.message || 'Profile updated successfully',
+      })
+    } catch (error) {
+      setState({ ...state, updateLoading: false })
+      notification.error({
+        message: 'Error',
+        description: error?.response?.data?.message || 'Something went wrong',
+      })
+    }
   }
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo)
@@ -101,6 +117,7 @@ const Profile = () => {
             type='primary'
             htmlType='submit'
             size='large'
+            loading={state.updateLoading}
           >
             Update
           </Button>
