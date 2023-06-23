@@ -139,6 +139,9 @@ const Wrapper = styled.div`
   label {
     width: 110px;
   }
+  input {
+    text-transform: capitalize;
+  }
   /* Mobile */
   @media (max-width: 580px) {
     .ant-form-item {
