@@ -2,14 +2,14 @@ import { Form, Select } from 'antd'
 import { capitalizeFirstLetter } from '../../../../../lib/helper'
 import { useState } from 'react'
 
-const Gender = () => {
+const Gender = ({ state, setState }) => {
   // create options for gender
   const genderOptions = ['male', 'female', 'other']
   const [selectedGender, setSelectedGender] = useState('')
 
   const handleGenderChange = (value) => {
     setSelectedGender(value)
-    // console.log(`selected ${value}`)
+    setState({ ...state, gender: value })
   }
 
   return (
@@ -18,7 +18,7 @@ const Gender = () => {
         <Select
           placeholder='Select gender'
           onChange={handleGenderChange}
-          value={selectedGender}
+          value={state.gender || selectedGender}
           size='large'
         >
           {genderOptions.map((option) => (
