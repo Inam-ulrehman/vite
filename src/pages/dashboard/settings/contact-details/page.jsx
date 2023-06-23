@@ -148,10 +148,16 @@ const ContactDetails = () => {
         </div>
 
         {/* update */}
-
-        <Button type='primary' htmlType='submit'>
-          Update
-        </Button>
+        <Form.Item>
+          <Button
+            className='update'
+            type='primary'
+            htmlType='submit'
+            size='large'
+          >
+            Update
+          </Button>
+        </Form.Item>
       </Form>
     </Wrapper>
   )

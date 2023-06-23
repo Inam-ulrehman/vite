@@ -75,12 +75,12 @@ const ChangePassword = () => {
 
         <Form.Item>
           <Button
+            className='update'
             type='primary'
             htmlType='submit'
-            className='login-form-button'
             size='large'
           >
-            Update Password
+            Update
           </Button>
         </Form.Item>
       </Form>
