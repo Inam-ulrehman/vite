@@ -1,39 +1,39 @@
 import { Form } from 'antd'
 import { useEffect, useState } from 'react'
 import 'react-phone-number-input/style.css'
-import PhoneInput from 'react-phone-number-input'
+import PhoneInput, { formatPhoneNumberIntl } from 'react-phone-number-input'
 import { styled } from 'styled-components'
 import { isPossiblePhoneNumber } from 'react-phone-number-input'
-const initialState = {
-  mobile: '',
-  value: '',
-  error: '',
-}
-const MobileNumberForm = () => {
-  const [state, setState] = useState(initialState)
-  const { value, error } = state
+
+const MobileNumberForm = ({ state, setState }) => {
+  const [error, setError] = useState('')
+  const { mobile } = state
+
+  // console.log('country', parsePhoneNumber(mobile))
+  const handleChange = (value) => {
+    setState({ ...state, mobile: value })
+  }
 
   useEffect(() => {
-    if (value) {
-      // if isPossiblePhoneNumber is not true then show error message
-      console.log(value)
-      if (!isPossiblePhoneNumber(value)) {
-        setState({ ...state, error: 'Invalid phone number' })
+    if (mobile) {
+      if (!isPossiblePhoneNumber(mobile)) {
+        setError('Invalid phone number')
       } else {
-        setState({ ...state, error: '' })
+        setError('')
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value])
+  }, [mobile])
   return (
     <Wrapper>
       <Form.Item label='Mobile'>
         <PhoneInput
           className='mobile-input'
           defaultCountry='CA'
+          country='CA'
           placeholder='Enter phone number'
-          value={value}
-          onChange={(value) => setState({ ...state, value })}
+          value={formatPhoneNumberIntl(mobile)}
+          onChange={handleChange}
         />
         {error && <p style={{ color: 'red', margin: '0px' }}>{error}</p>}
       </Form.Item>
