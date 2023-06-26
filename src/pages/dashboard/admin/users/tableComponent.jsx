@@ -8,20 +8,31 @@ const columns = [
     key: 'name',
     render: (text) => <a>{text}</a>,
     ellipsis: true,
+    width: 150,
   },
   {
     title: 'Email',
     dataIndex: 'email',
     key: 'email',
-    ellipsis: true,
     responsive: ['md'],
+    ellipsis: true,
+    width: 150,
+  },
+  {
+    title: 'Mobile',
+    dataIndex: 'mobile',
+    key: 'mobile',
+    responsive: ['md'],
+    ellipsis: true,
+    width: 150,
   },
   {
     title: 'Address',
     dataIndex: ['city', 'country'], // Array of field names
     key: 'address',
-    ellipsis: true,
     responsive: ['md'],
+    ellipsis: true,
+    width: 150,
     render: (_, record) => {
       const { city, country } = record
       const addressParts = [city, country].filter(Boolean) // Filter out empty values
