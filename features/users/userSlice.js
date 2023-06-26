@@ -1,12 +1,34 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { customFetch } from '../../lib/axios/customFetch'
+import { notification } from 'antd'
 import Cookies from 'js-cookie'
+import { addObjectInState } from '../../lib/helper'
 const initialState = {
+  // ========>>>> User Profile
+  _id: '',
   name: Cookies.get('name') ? Cookies.get('name') : '',
   lastName: '',
+  mobile: '',
   email: '',
-  isMember: Cookies.get('token') ? true : false,
   role: Cookies.get('role') ? Cookies.get('role') : 'user',
+  gender: '',
+  dob: '',
+  active: '',
+  verified: '',
+  location: '',
+  // ========>>>> User Address
+  apartment: '',
+  house: '',
+  street: '',
+  city: '',
+  province: '',
+  country: '',
+  postalCode: '',
+  // ========>>>> User Social
+  createdAt: '',
+  updatedAt: '',
+  // ========>>>> other values
+  isMember: Cookies.get('token') ? true : false,
   isLoading: false,
 }
 export const usersThunk = createAsyncThunk(
@@ -14,6 +36,20 @@ export const usersThunk = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await customFetch('')
+
+      return response.data
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data)
+    }
+  }
+)
+
+//  ================>>>>>>>>> User Profile <<<<<<<<<<==================
+export const userProfileThunk = createAsyncThunk(
+  'users/userProfileThunk',
+  async (_, thunkAPI) => {
+    try {
+      const response = await customFetch('users/profile')
 
       return response.data
     } catch (error) {
@@ -54,6 +90,19 @@ const usersSlice = createSlice({
         state.isLoading = false
       })
       .addCase(usersThunk.rejected, (state, { payload }) => {
+        console.log('promise rejected')
+        console.log(payload)
+        state.isLoading = false
+      })
+      //  ================>>>>>>>>> User Profile <<<<<<<<<<==================
+      .addCase(userProfileThunk.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(userProfileThunk.fulfilled, (state, { payload }) => {
+        addObjectInState(payload.result, state)
+        state.isLoading = false
+      })
+      .addCase(userProfileThunk.rejected, (state, { payload }) => {
         console.log('promise rejected')
         console.log(payload)
         state.isLoading = false

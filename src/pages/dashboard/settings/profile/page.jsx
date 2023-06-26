@@ -6,6 +6,8 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import { customFetch } from '../../../../../lib/axios/customFetch'
 import Loading from './loading'
+import { useDispatch } from 'react-redux'
+import { userProfileThunk } from '../../../../../features/users/userSlice'
 
 const initialState = {
   name: '',
@@ -17,6 +19,7 @@ const initialState = {
 }
 const Profile = () => {
   const [state, setState] = useState(initialState)
+  const dispatch = useDispatch()
   const { notification } = App.useApp()
   const onFinish = async () => {
     try {
@@ -45,6 +48,7 @@ const Profile = () => {
 
   // get data from server and set it to state
   useEffect(() => {
+    dispatch(userProfileThunk())
     const getData = async () => {
       try {
         setState({ ...state, isLoading: true })
@@ -52,7 +56,6 @@ const Profile = () => {
         const { name, lastName, gender, dob } = response.data.result
 
         setState({ ...state, name, lastName, gender, dob, isLoading: false })
-        console.log(dob)
       } catch (error) {
         setState({ ...state, isLoading: false })
         notification.error({
