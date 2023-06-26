@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { customFetch } from '../../lib/axios/customFetch'
-import { notification } from 'antd'
+import { toast } from 'react-toastify'
+
 import Cookies from 'js-cookie'
 import { addObjectInState } from '../../lib/helper'
 const initialState = {
@@ -30,13 +31,13 @@ const initialState = {
   // ========>>>> other values
   isMember: Cookies.get('token') ? true : false,
   isLoading: false,
+  isUpdating: false,
 }
 export const usersThunk = createAsyncThunk(
   'users/usersThunk',
   async (_, thunkAPI) => {
     try {
       const response = await customFetch('')
-
       return response.data
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data)
@@ -50,9 +51,23 @@ export const userProfileThunk = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await customFetch('users/profile')
-
       return response.data
     } catch (error) {
+      toast.error(error.response.data.message || 'Something went wrong')
+      return thunkAPI.rejectWithValue(error.response.data)
+    }
+  }
+)
+//  ================>>>>>>>>> User Profile Update <<<<<<<<<<==================
+export const userProfileUpdateThunk = createAsyncThunk(
+  'users/userProfileUpdateThunk',
+  async (state, thunkAPI) => {
+    try {
+      const response = await customFetch.put('users/profile', state)
+      toast.success(response.data.message)
+      return response.data
+    } catch (error) {
+      toast.error(error.response.data.message || 'Something went wrong')
       return thunkAPI.rejectWithValue(error.response.data)
     }
   }
@@ -106,6 +121,19 @@ const usersSlice = createSlice({
         console.log('promise rejected')
         console.log(payload)
         state.isLoading = false
+      })
+      //  ================>>>>>>>>> User Profile update <<<<<<<<<<==================
+      .addCase(userProfileUpdateThunk.pending, (state) => {
+        state.isUpdating = true
+      })
+      .addCase(userProfileUpdateThunk.fulfilled, (state, { payload }) => {
+        addObjectInState(payload.result, state)
+        state.isUpdating = false
+      })
+      .addCase(userProfileUpdateThunk.rejected, (state, { payload }) => {
+        console.log('promise rejected')
+        console.log(payload)
+        state.isUpdating = false
       })
   },
 })

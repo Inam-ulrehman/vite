@@ -1,74 +1,44 @@
-import { App, Button, Form, Input } from 'antd'
+import { Button, Form, Input } from 'antd'
 import { styled } from 'styled-components'
 import Gender from './form-gender'
 import DateOfBirth from './form-dob'
-import { useState } from 'react'
-import { useEffect } from 'react'
-import { customFetch } from '../../../../../lib/axios/customFetch'
-import Loading from './loading'
-import { useDispatch } from 'react-redux'
-import { userProfileThunk } from '../../../../../features/users/userSlice'
 
-const initialState = {
-  name: '',
-  lastName: '',
-  gender: '',
-  dob: '',
-  isLoading: false,
-  updateLoading: false,
-}
+import { useEffect } from 'react'
+
+import Loading from './loading'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  getStateValues,
+  userProfileThunk,
+  userProfileUpdateThunk,
+} from '../../../../../features/users/userSlice'
+
 const Profile = () => {
-  const [state, setState] = useState(initialState)
+  const { name, lastName, dob, gender, isLoading, isUpdating } = useSelector(
+    (state) => state.user
+  )
+
   const dispatch = useDispatch()
-  const { notification } = App.useApp()
+
   const onFinish = async () => {
-    try {
-      setState({ ...state, updateLoading: true })
-      const response = await customFetch.put('users/profile', state)
-      console.log(state)
-      setState({ ...state, updateLoading: false })
-      notification.success({
-        message: 'Success',
-        description: response?.data?.message || 'Profile updated successfully',
-      })
-    } catch (error) {
-      setState({ ...state, updateLoading: false })
-      notification.error({
-        message: 'Error',
-        description: error?.response?.data?.message || 'Something went wrong',
-      })
-    }
+    dispatch(userProfileUpdateThunk({ name, lastName, dob, gender }))
   }
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo)
   }
   const handleChange = (e) => {
-    setState({ ...state, [e.target.name]: e.target.value })
+    const name = e.target.name
+    const value = e.target.value
+    dispatch(getStateValues({ name, value }))
   }
 
   // get data from server and set it to state
   useEffect(() => {
     dispatch(userProfileThunk())
-    const getData = async () => {
-      try {
-        setState({ ...state, isLoading: true })
-        const response = await customFetch('users/profile')
-        const { name, lastName, gender, dob } = response.data.result
-
-        setState({ ...state, name, lastName, gender, dob, isLoading: false })
-      } catch (error) {
-        setState({ ...state, isLoading: false })
-        notification.error({
-          message: 'Error',
-          description: error?.response?.data?.message || 'Something went wrong',
-        })
-      }
-    }
-    getData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  if (state.isLoading)
+  if (isLoading)
     return (
       <Wrapper>
         <Loading />
@@ -81,7 +51,7 @@ const Profile = () => {
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         autoComplete='off'
-        initialValues={{ ...state }}
+        initialValues={{ name, lastName, gender, dob }}
       >
         <h1>Profile</h1>
 
@@ -101,7 +71,7 @@ const Profile = () => {
           <Input
             name='name'
             size='large'
-            value={state.name}
+            value={name}
             onChange={handleChange}
           />
         </Form.Item>
@@ -110,16 +80,16 @@ const Profile = () => {
           <Input
             size='large'
             name='lastName'
-            value={state.lastName}
+            value={lastName}
             onChange={handleChange}
           />
         </Form.Item>
 
         {/* Date Of Birth */}
-        <DateOfBirth state={state} setState={setState} />
+        <DateOfBirth />
 
         {/* Gender */}
-        <Gender state={state} setState={setState} />
+        <Gender />
 
         <Form.Item>
           <Button
@@ -127,7 +97,7 @@ const Profile = () => {
             type='primary'
             htmlType='submit'
             size='large'
-            loading={state.updateLoading}
+            loading={isUpdating}
           >
             Update
           </Button>

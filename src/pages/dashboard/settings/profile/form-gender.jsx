@@ -1,15 +1,18 @@
 import { Form, Select } from 'antd'
 import { capitalizeFirstLetter } from '../../../../../lib/helper'
 import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { getStateValues } from '../../../../../features/users/userSlice'
 
-const Gender = ({ state, setState }) => {
-  // create options for gender
+const Gender = () => {
+  const { gender } = useSelector((state) => state.user)
+  const dispatch = useDispatch()
   const genderOptions = ['male', 'female', 'other']
   const [selectedGender, setSelectedGender] = useState('')
 
   const handleGenderChange = (value) => {
     setSelectedGender(value)
-    setState({ ...state, gender: value })
+    dispatch(getStateValues({ name: 'gender', value }))
   }
 
   return (
@@ -18,7 +21,7 @@ const Gender = ({ state, setState }) => {
         <Select
           placeholder='Select gender'
           onChange={handleGenderChange}
-          value={state.gender || selectedGender}
+          value={gender || selectedGender}
           size='large'
         >
           {genderOptions.map((option) => (

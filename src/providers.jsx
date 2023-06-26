@@ -1,5 +1,6 @@
 import { App, ConfigProvider } from 'antd'
-
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { Provider } from 'react-redux'
 import store from '../store'
 import { theme } from '../lib/styles/theme'
@@ -9,7 +10,10 @@ const Providers = ({ children }) => {
     <>
       <Provider store={store}>
         <ConfigProvider theme={theme}>
-          <App>{children}</App>
+          <App>
+            <ToastContainer />
+            {children}
+          </App>
         </ConfigProvider>
       </Provider>
     </>
