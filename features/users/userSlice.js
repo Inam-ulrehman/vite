@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { customFetch } from '../../lib/axios/customFetch'
+import { customFetch, customFetchLocal } from '../../lib/axios/customFetch'
 import { toast } from 'react-toastify'
 
 import Cookies from 'js-cookie'
@@ -22,6 +22,7 @@ const initialState = {
   house: '',
   street: '',
   city: '',
+  region: '',
   province: '',
   country: '',
   postalCode: '',

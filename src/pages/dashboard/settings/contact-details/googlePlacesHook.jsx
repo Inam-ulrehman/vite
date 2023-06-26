@@ -6,12 +6,14 @@ import usePlacesAutocomplete, {
 import styled from 'styled-components'
 
 import { Input, Select } from 'antd'
+import { useDispatch } from 'react-redux'
+import { getStateValues } from '../../../../../features/users/userSlice'
 
 // This is outcome from address
 
 const libraries = ['places']
 
-const GooglePlacesHook = ({ state, setState }) => {
+const GooglePlacesHook = () => {
   // Load your script first
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: import.meta.env.VITE_PUBLIC_GOOGLE_MAPS_API_KEY,
@@ -25,13 +27,14 @@ const GooglePlacesHook = ({ state, setState }) => {
   return (
     <>
       <div className='places-container'>
-        <PlacesAutocomplete state={state} setState={setState} />
+        <PlacesAutocomplete />
       </div>
     </>
   )
 }
 // We have this approach because this component must load after isLoaded useLoadScript
-const PlacesAutocomplete = ({ state, setState }) => {
+const PlacesAutocomplete = () => {
+  const dispatch = useDispatch()
   const {
     ready,
     value,
@@ -68,17 +71,34 @@ const PlacesAutocomplete = ({ state, setState }) => {
     const startLength = address_components.length - 5
     // We Slice because last 5 values are important also some times array is not returning same values.
     const lastAddress = address_components.slice(startLength, length)
-    setState({
-      ...state,
-      house: address_components[0]?.long_name,
-      street: address_components[1]?.long_name,
-      city: lastAddress[0]?.long_name,
-      region: lastAddress[1]?.long_name,
-      province: lastAddress[2]?.long_name,
-      country: lastAddress[3]?.long_name,
-      postalCode: lastAddress[4]?.long_name,
-      location: location,
-    })
+
+    dispatch(
+      getStateValues({ name: 'house', value: address_components[0]?.long_name })
+    )
+    dispatch(
+      getStateValues({
+        name: 'street',
+        value: address_components[1]?.long_name,
+      })
+    )
+    dispatch(getStateValues({ name: 'city', value: lastAddress[0]?.long_name }))
+    dispatch(
+      getStateValues({ name: 'region', value: lastAddress[1]?.long_name })
+    )
+    dispatch(
+      getStateValues({ name: 'province', value: lastAddress[2]?.long_name })
+    )
+    dispatch(
+      getStateValues({ name: 'country', value: lastAddress[3]?.long_name })
+    )
+    dispatch(
+      getStateValues({ name: 'postalCode', value: lastAddress[4]?.long_name })
+    )
+
+    dispatch(
+      getStateValues({ name: 'location', value: JSON.stringify(location) })
+    )
+    //
   }
   // state code=======End
   return (

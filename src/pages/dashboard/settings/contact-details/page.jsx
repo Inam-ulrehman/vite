@@ -1,35 +1,90 @@
 import { Button, Form, Input } from 'antd'
 import { styled } from 'styled-components'
 import FormMobile from './form-mobile'
-import { useState } from 'react'
+import { useEffect } from 'react'
 import GooglePlacesHook from './googlePlacesHook'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  getStateValues,
+  userProfileThunk,
+  userProfileUpdateThunk,
+} from '../../../../../features/users/userSlice'
 
-const initialStates = {
-  email: '',
-  mobile: '',
-  apartment: '',
-  house: '',
-  street: '',
-  city: '',
-  province: '',
-  country: '',
-  postalCode: '',
-  location: {
-    type: 'Point',
-    coordinates: [],
-  },
-}
 const ContactDetails = () => {
-  const [state, setState] = useState(initialStates)
-  const handleSubmit = (e) => {
-    e.preventDefault()
+  const {
+    email,
+    mobile,
+    apartment,
+    house,
+    street,
+    city,
+    region,
+    province,
+    country,
+    postalCode,
+    location,
+    isLoading,
+    isUpdating,
+  } = useSelector((state) => state.user)
+
+  const dispatch = useDispatch()
+
+  const onFinish = async () => {
+    dispatch(
+      userProfileUpdateThunk({
+        email,
+        mobile,
+        apartment,
+        house,
+        street,
+        city,
+        region,
+        province,
+        country,
+        postalCode,
+        location,
+      })
+    )
+  }
+  const onFinishFailed = (errorInfo) => {
+    console.log('Failed:', errorInfo)
   }
   const handleChange = (e) => {
-    setState({ ...state, [e.target.name]: e.target.value })
+    const name = e.target.name
+    const value = e.target.value
+    dispatch(getStateValues({ name, value }))
   }
+
+  // get data from server and set it to state
+  useEffect(() => {
+    dispatch(userProfileThunk())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  useEffect(() => {
+    form.setFieldsValue({ email }) // Update the email field value in the form
+  }, [email])
+  const [form] = Form.useForm()
   return (
     <Wrapper>
-      <Form onSubmit={handleSubmit}>
+      <Form
+        form={form}
+        name='basic'
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        autoComplete='off'
+        initialValues={{
+          email,
+          mobile,
+          apartment,
+          house,
+          street,
+          city,
+          region,
+          province,
+          country,
+          postalCode,
+        }}
+      >
         <h1>Contact Details</h1>
         {/* email */}
         <div>
@@ -37,29 +92,27 @@ const ContactDetails = () => {
             label='Email'
             name='email'
             rules={[
-              {
-                required: true,
-                message: 'Please input your email!',
-              },
+              { required: true, message: 'Email is required' },
+              { type: 'email', message: 'Invalid email address' },
             ]}
           >
             <Input
               size='large'
               type='email'
-              value={state.email}
+              value={email}
               name='email'
+              className='input-email'
               onChange={handleChange}
-              required
             />
           </Form.Item>
         </div>
         {/* mobile */}
-        <FormMobile state={state} setState={setState} />
+        <FormMobile />
 
         {/* Search Address */}
         <div>
           <Form.Item label='Search Address'>
-            <GooglePlacesHook state={state} setState={setState} />
+            <GooglePlacesHook />
           </Form.Item>
         </div>
         {/* apartment */}
@@ -68,7 +121,7 @@ const ContactDetails = () => {
             <Input
               size='large'
               type='text'
-              value={state.apartment}
+              value={apartment}
               name='apartment'
               onChange={handleChange}
             />
@@ -80,7 +133,7 @@ const ContactDetails = () => {
             <Input
               size='large'
               type='text'
-              value={state.house}
+              value={house}
               name='house'
               onChange={handleChange}
             />
@@ -92,7 +145,7 @@ const ContactDetails = () => {
             <Input
               size='large'
               type='text'
-              value={state.street}
+              value={street}
               name='street'
               onChange={handleChange}
             />
@@ -104,8 +157,20 @@ const ContactDetails = () => {
             <Input
               size='large'
               type='text'
-              value={state.city}
+              value={city}
               name='city'
+              onChange={handleChange}
+            />
+          </Form.Item>
+        </div>
+        {/* region */}
+        <div>
+          <Form.Item label='Region'>
+            <Input
+              size='large'
+              type='text'
+              value={region}
+              name='region'
               onChange={handleChange}
             />
           </Form.Item>
@@ -116,7 +181,7 @@ const ContactDetails = () => {
             <Input
               size='large'
               type='text'
-              value={state.province}
+              value={province}
               name='province'
               onChange={handleChange}
             />
@@ -128,7 +193,7 @@ const ContactDetails = () => {
             <Input
               size='large'
               type='text'
-              value={state.country}
+              value={country}
               name='country'
               onChange={handleChange}
             />
@@ -140,8 +205,9 @@ const ContactDetails = () => {
             <Input
               size='large'
               type='text'
-              value={state.postalCode}
+              value={postalCode}
               name='postalCode'
+              className='postalCode'
               onChange={handleChange}
             />
           </Form.Item>
@@ -154,6 +220,7 @@ const ContactDetails = () => {
             type='primary'
             htmlType='submit'
             size='large'
+            loading={isUpdating}
           >
             Update
           </Button>
@@ -172,6 +239,14 @@ const Wrapper = styled.div`
   }
   label {
     width: 110px;
+  }
+  input {
+    // first letter capital
+    text-transform: capitalize;
+  }
+  .postalCode,
+  .input-email {
+    text-transform: uppercase;
   }
   /* Mobile */
   @media (max-width: 580px) {

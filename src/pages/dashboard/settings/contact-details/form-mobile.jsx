@@ -4,14 +4,20 @@ import 'react-phone-number-input/style.css'
 import PhoneInput, { formatPhoneNumberIntl } from 'react-phone-number-input'
 import { styled } from 'styled-components'
 import { isPossiblePhoneNumber } from 'react-phone-number-input'
+import { useDispatch, useSelector } from 'react-redux'
+import { getStateValues } from '../../../../../features/users/userSlice'
 
-const MobileNumberForm = ({ state, setState }) => {
+const MobileNumberForm = () => {
+  const { mobile } = useSelector((state) => state.user)
+  const dispatch = useDispatch()
   const [error, setError] = useState('')
-  const { mobile } = state
 
   // console.log('country', parsePhoneNumber(mobile))
-  const handleChange = (value) => {
-    setState({ ...state, mobile: value })
+  const handleChange = (e) => {
+    if (e !== undefined) {
+      const value = e
+      dispatch(getStateValues({ name: 'mobile', value }))
+    }
   }
 
   useEffect(() => {
