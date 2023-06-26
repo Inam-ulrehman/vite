@@ -49,7 +49,7 @@ const columns = [
         )
       return icon
     },
-    width: 100,
+    width: 65,
   },
   {
     title: 'Status',
@@ -61,7 +61,7 @@ const columns = [
       const text = active ? 'Active' : 'Inactive'
       return <span style={{ color }}>{text}</span>
     },
-    width: 100,
+    width: 80,
   },
   {
     title: 'Action',
@@ -72,14 +72,13 @@ const columns = [
         <Button type='primary'>Edit</Button>
       </Space>
     ),
-    width: 100,
+    width: 80,
   },
 ]
 
 const App = () => {
   const { userList, isLoading } = useSelector((state) => state.adminUsers)
 
-  if (isLoading) return <div>Loading...</div>
   return (
     <Table
       size='large'
@@ -88,6 +87,7 @@ const App = () => {
       bordered
       footer={() => 'Footer'}
       pagination={false}
+      loading={isLoading}
     />
   )
 }

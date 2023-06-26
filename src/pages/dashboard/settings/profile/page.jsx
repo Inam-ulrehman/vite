@@ -2,16 +2,14 @@ import { Button, Form, Input } from 'antd'
 import { styled } from 'styled-components'
 import Gender from './form-gender'
 import DateOfBirth from './form-dob'
-
 import { useEffect } from 'react'
-
-import Loading from './loading'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   getStateValues,
   userProfileThunk,
   userProfileUpdateThunk,
 } from '../../../../../features/users/userSlice'
+import ApiLoading from '../../../../components/singleComponent/apiLoading'
 
 const Profile = () => {
   const { name, lastName, dob, gender, isLoading, isUpdating } = useSelector(
@@ -38,12 +36,7 @@ const Profile = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  if (isLoading)
-    return (
-      <Wrapper>
-        <Loading />
-      </Wrapper>
-    )
+  if (isLoading) return <ApiLoading />
   return (
     <Wrapper>
       <Form

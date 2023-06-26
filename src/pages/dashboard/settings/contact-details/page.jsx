@@ -10,7 +10,8 @@ import {
   userProfileUpdateThunk,
 } from '../../../../../features/users/userSlice'
 import getPostalCodeCoordinates from './getPostalCodeCoordinates'
-import Loading from './loading'
+
+import ApiLoading from '../../../../components/singleComponent/apiLoading'
 
 const ContactDetails = () => {
   const {
@@ -70,12 +71,7 @@ const ContactDetails = () => {
     form.setFieldsValue({ email }) // Update the email field value in the form
   }, [email])
   const [form] = Form.useForm()
-  if (isLoading)
-    return (
-      <Wrapper>
-        <Loading />
-      </Wrapper>
-    )
+  if (isLoading) return <ApiLoading />
   return (
     <Wrapper>
       <Form
