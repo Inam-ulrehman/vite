@@ -1,10 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { customFetch } from '../../lib/axios/customFetch'
+import { toast } from 'react-toastify'
 
 const initialState = {
   name: '',
   lastName: '',
   email: '',
+  userList: [],
   isLoading: false,
 }
 export const adminUsersThunk = createAsyncThunk(
@@ -15,6 +17,20 @@ export const adminUsersThunk = createAsyncThunk(
 
       return response.data
     } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data)
+    }
+  }
+)
+// ==============>>>>>>>>>>> get all users <<<<<<<<<<<<==================
+export const adminGetAllUsersThunk = createAsyncThunk(
+  'adminUsers/adminGetAllUsersThunk',
+  async (_, thunkAPI) => {
+    try {
+      const response = await customFetch('/users')
+
+      return response.data
+    } catch (error) {
+      toast.error('Error fetching users')
       return thunkAPI.rejectWithValue(error.response.data)
     }
   }
@@ -52,6 +68,19 @@ const adminUsersSlice = createSlice({
         state.isLoading = false
       })
       .addCase(adminUsersThunk.rejected, (state, { payload }) => {
+        console.log('promise rejected')
+        console.log(payload)
+        state.isLoading = false
+      })
+      // ==============>>>>>>>>>>> get all users <<<<<<<<<<<<==================
+      .addCase(adminGetAllUsersThunk.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(adminGetAllUsersThunk.fulfilled, (state, { payload }) => {
+        state.userList = payload.result
+        state.isLoading = false
+      })
+      .addCase(adminGetAllUsersThunk.rejected, (state, { payload }) => {
         console.log('promise rejected')
         console.log(payload)
         state.isLoading = false
