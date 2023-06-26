@@ -2,9 +2,16 @@ import styled from 'styled-components'
 
 import { App, Button, Form, Input, Typography } from 'antd'
 import { LockOutlined } from '@ant-design/icons'
+import { useDispatch, useSelector } from 'react-redux'
+import { userProfileUpdateThunk } from '../../../../../features/users/userSlice'
 const { Title } = Typography
 const ChangePassword = () => {
-  const onFinish = async (values) => {}
+  const { isUpdating } = useSelector((state) => state.user)
+  const dispatch = useDispatch()
+  const onFinish = async (values) => {
+    const { password } = values
+    dispatch(userProfileUpdateThunk({ password }))
+  }
   return (
     <Wrapper>
       <Form name='normal_login' className='login-form' onFinish={onFinish}>
@@ -79,6 +86,7 @@ const ChangePassword = () => {
             type='primary'
             htmlType='submit'
             size='large'
+            loading={isUpdating}
           >
             Update
           </Button>
