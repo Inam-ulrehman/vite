@@ -10,6 +10,7 @@ import {
   userProfileUpdateThunk,
 } from '../../../../../features/users/userSlice'
 import getPostalCodeCoordinates from './getPostalCodeCoordinates'
+import Loading from './loading'
 
 const ContactDetails = () => {
   const {
@@ -69,6 +70,12 @@ const ContactDetails = () => {
     form.setFieldsValue({ email }) // Update the email field value in the form
   }, [email])
   const [form] = Form.useForm()
+  if (isLoading)
+    return (
+      <Wrapper>
+        <Loading />
+      </Wrapper>
+    )
   return (
     <Wrapper>
       <Form
@@ -116,7 +123,7 @@ const ContactDetails = () => {
 
         {/* Search Address */}
         <div>
-          <Form.Item label='Search Address'>
+          <Form.Item label='Type Address'>
             <GooglePlacesHook />
           </Form.Item>
         </div>
