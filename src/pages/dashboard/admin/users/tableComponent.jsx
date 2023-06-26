@@ -49,6 +49,19 @@ const columns = [
         )
       return icon
     },
+    width: 100,
+  },
+  {
+    title: 'Status',
+    dataIndex: 'active',
+    key: 'active',
+    render: (_, record) => {
+      const { active } = record
+      const color = active ? 'green' : 'red'
+      const text = active ? 'Active' : 'Inactive'
+      return <span style={{ color }}>{text}</span>
+    },
+    width: 100,
   },
   {
     title: 'Action',
@@ -57,9 +70,9 @@ const columns = [
       // console.log(record),
       <Space size='middle'>
         <Button type='primary'>Edit</Button>
-        <Button type='danger'>Delete</Button>
       </Space>
     ),
+    width: 100,
   },
 ]
 
