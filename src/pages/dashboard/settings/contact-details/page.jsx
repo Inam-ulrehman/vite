@@ -9,6 +9,7 @@ import {
   userProfileThunk,
   userProfileUpdateThunk,
 } from '../../../../../features/users/userSlice'
+import getPostalCodeCoordinates from './getPostalCodeCoordinates'
 
 const ContactDetails = () => {
   const {
@@ -22,7 +23,6 @@ const ContactDetails = () => {
     province,
     country,
     postalCode,
-    location,
     isLoading,
     isUpdating,
   } = useSelector((state) => state.user)
@@ -30,6 +30,11 @@ const ContactDetails = () => {
   const dispatch = useDispatch()
 
   const onFinish = async () => {
+    let location = null
+    if (postalCode) {
+      const data = await getPostalCodeCoordinates(postalCode)
+      location = JSON.stringify(data)
+    }
     dispatch(
       userProfileUpdateThunk({
         email,
