@@ -112,11 +112,11 @@ const Profile = () => {
           />
         </Form.Item>
 
-        {/* Gender */}
-        <Gender state={state} setState={setState} />
-
         {/* Date Of Birth */}
         <DateOfBirth state={state} setState={setState} />
+
+        {/* Gender */}
+        <Gender state={state} setState={setState} />
 
         <Form.Item>
           <Button
