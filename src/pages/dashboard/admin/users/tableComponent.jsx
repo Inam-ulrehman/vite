@@ -1,6 +1,7 @@
 import { Button, Space, Table, Tooltip } from 'antd'
-import { UserOutlined, CrownOutlined } from '@ant-design/icons'
+import { UserOutlined, CrownOutlined, EditOutlined } from '@ant-design/icons'
 import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 const columns = [
   {
     title: 'Name',
@@ -109,6 +110,7 @@ const columns = [
     dataIndex: 'createdAt',
     align: 'center',
     width: 90,
+    responsive: ['lg'],
     render: (createdAt) => {
       const currentDate = new Date()
       const createdDate = new Date(createdAt)
@@ -145,10 +147,9 @@ const columns = [
     align: 'center',
     width: 80,
     render: (_, record) => (
-      // console.log(record),
-      <Space size='middle'>
-        <Button type='primary'>Edit</Button>
-      </Space>
+      <Link to={`/dashboard/admin/users/${record._id}`}>
+        <Button type='primary' icon={<EditOutlined />} />
+      </Link>
     ),
   },
 ]
