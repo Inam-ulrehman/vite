@@ -9,9 +9,11 @@ const initialState = {
   userList: [],
   search: '',
   page: 1,
-  limit: 15,
-  totalCount: 0,
+  limit: 8,
   countOnPage: 0,
+  totalCount: 0,
+  totalPages: 0,
+  currentPage: 1,
   sort: '-createdAt',
   isLoading: false,
 }
@@ -32,7 +34,7 @@ export const adminGetAllUsersThunk = createAsyncThunk(
   'adminUsers/adminGetAllUsersThunk',
   async (_, thunkAPI) => {
     const { search, page, limit } = thunkAPI.getState().adminUsers
-    console.log('search', search, 'page', page, 'limit', limit)
+
     try {
       const response = await customFetch(
         `users?search=${search}&page=${page}&limit=${limit}`
@@ -88,6 +90,10 @@ const adminUsersSlice = createSlice({
       })
       .addCase(adminGetAllUsersThunk.fulfilled, (state, { payload }) => {
         state.userList = payload.result
+        state.countOnPage = payload.countOnPage
+        state.totalCount = payload.totalCount
+        state.totalPages = payload.totalPages
+        state.currentPage = payload.currentPage
         state.isLoading = false
       })
       .addCase(adminGetAllUsersThunk.rejected, (state, { payload }) => {
