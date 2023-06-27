@@ -9,6 +9,10 @@ const PaginationComponent = () => {
     dispatch(getStateValues({ name: 'limit', value: pageSize }))
   }
   const onChange = (page, pageSize) => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
     dispatch(getStateValues({ name: 'page', value: page }))
   }
   return (
