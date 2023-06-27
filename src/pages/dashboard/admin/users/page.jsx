@@ -3,21 +3,31 @@ import { useDispatch, useSelector } from 'react-redux'
 import { adminGetAllUsersThunk } from '../../../../../features/users/adminUserSlice'
 import TableComponent from './tableComponent'
 import SearchComponent from './searchComponent'
+import SortComponent from './sortComponent'
+import { styled } from 'styled-components'
 
 const AdminUsers = () => {
   const dispatch = useDispatch()
-  const { search, limit, page } = useSelector((state) => state.adminUsers)
+  const { search, limit, page, sort } = useSelector((state) => state.adminUsers)
   useEffect(() => {
     document.title = 'Admin Users'
     dispatch(adminGetAllUsersThunk())
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search, limit, page])
+  }, [search, limit, page, sort])
   return (
-    <div>
-      <SearchComponent />
+    <Wrapper>
+      <div className='search-sort'>
+        <SearchComponent />
+        <SortComponent />
+      </div>
       <TableComponent />
-    </div>
+    </Wrapper>
   )
 }
 
+const Wrapper = styled.section`
+  .search-sort {
+    display: flex;
+  }
+`
 export default AdminUsers

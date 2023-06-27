@@ -33,11 +33,11 @@ export const adminUsersThunk = createAsyncThunk(
 export const adminGetAllUsersThunk = createAsyncThunk(
   'adminUsers/adminGetAllUsersThunk',
   async (_, thunkAPI) => {
-    const { search, page, limit } = thunkAPI.getState().adminUsers
+    const { search, page, limit, sort } = thunkAPI.getState().adminUsers
 
     try {
       const response = await customFetch(
-        `users?search=${search}&page=${page}&limit=${limit}`
+        `users?search=${search}&page=${page}&limit=${limit}&sort=${sort}`
       )
 
       return response.data
