@@ -23,7 +23,7 @@ const Login = () => {
 
     try {
       const response = await customFetch.post('users/login', values)
-      console.log(response)
+
       setState({ ...state, isLoading: false })
       const { firstName, role, token } = response.data
 
@@ -32,7 +32,7 @@ const Login = () => {
       Cookies.set('name', firstName, { expires: 7 })
       Cookies.set('role', role, { expires: 7 })
       // redirect to Dashboard page
-      // window.location.href = '/dashboard'
+      window.location.href = '/dashboard'
     } catch (error) {
       setState({ ...state, isLoading: false })
       notification.error({
