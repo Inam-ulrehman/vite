@@ -104,6 +104,42 @@ const columns = [
     },
   },
   {
+    title: 'Loyalty',
+    key: 'age',
+    dataIndex: 'createdAt',
+    align: 'center',
+    width: 90,
+    render: (createdAt) => {
+      const currentDate = new Date()
+      const createdDate = new Date(createdAt)
+      const ageInMilliseconds = currentDate - createdDate
+      const ageInSeconds = Math.floor(ageInMilliseconds / 1000)
+
+      let ageText = ''
+
+      if (ageInSeconds < 60) {
+        ageText = `${ageInSeconds} seconds`
+      } else if (ageInSeconds < 3600) {
+        const ageInMinutes = Math.floor(ageInSeconds / 60)
+        ageText = `${ageInMinutes} minutes`
+      } else if (ageInSeconds < 86400) {
+        const ageInHours = Math.floor(ageInSeconds / 3600)
+        ageText = `${ageInHours} hours`
+      } else if (ageInSeconds < 2592000) {
+        const ageInDays = Math.floor(ageInSeconds / 86400)
+        ageText = `${ageInDays} days`
+      } else if (ageInSeconds < 31536000) {
+        const ageInMonths = Math.floor(ageInSeconds / 2592000)
+        ageText = `${ageInMonths} months`
+      } else {
+        const ageInYears = Math.floor(ageInSeconds / 31536000)
+        ageText = `${ageInYears} years`
+      }
+
+      return <Tooltip title={createdAt}>{ageText}</Tooltip>
+    },
+  },
+  {
     title: 'Action',
     key: 'action',
     align: 'center',

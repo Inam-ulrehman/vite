@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { adminGetAllUsersThunk } from '../../../../../features/users/adminUserSlice'
 import TableComponent from './tableComponent'
+import SearchComponent from './searchComponent'
 
 const AdminUsers = () => {
   const dispatch = useDispatch()
@@ -12,6 +13,7 @@ const AdminUsers = () => {
   }, [])
   return (
     <div>
+      <SearchComponent />
       <TableComponent />
     </div>
   )
