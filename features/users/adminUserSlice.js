@@ -9,7 +9,7 @@ const initialState = {
   userList: [],
   search: '',
   page: 1,
-  limit: 8,
+  limit: 10,
   countOnPage: 0,
   totalCount: 0,
   totalPages: 0,
