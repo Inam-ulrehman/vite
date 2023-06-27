@@ -6,14 +6,17 @@ const PaginationComponent = () => {
   const { page, totalCount } = useSelector((state) => state.adminUsers)
   const dispatch = useDispatch()
   const onShowSizeChange = (current, pageSize) => {
-    console.log('Current: ', current, '; PageSize: ', pageSize)
     dispatch(getStateValues({ name: 'limit', value: pageSize }))
+  }
+  const onChange = (page, pageSize) => {
+    dispatch(getStateValues({ name: 'page', value: page }))
   }
   return (
     <div>
       <Pagination
         showSizeChanger
         onShowSizeChange={onShowSizeChange}
+        onChange={onChange}
         defaultCurrent={page}
         total={totalCount}
       />

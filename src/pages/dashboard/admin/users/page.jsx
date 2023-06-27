@@ -6,12 +6,12 @@ import SearchComponent from './searchComponent'
 
 const AdminUsers = () => {
   const dispatch = useDispatch()
-  const { search, limit } = useSelector((state) => state.adminUsers)
+  const { search, limit, page } = useSelector((state) => state.adminUsers)
   useEffect(() => {
     document.title = 'Admin Users'
     dispatch(adminGetAllUsersThunk())
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search, limit])
+  }, [search, limit, page])
   return (
     <div>
       <SearchComponent />
