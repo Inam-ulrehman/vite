@@ -6,9 +6,9 @@ const columns = [
     title: 'Name',
     dataIndex: ['name', 'lastName'], // Array of field names
     key: 'name',
-    responsive: ['md'],
     ellipsis: true,
     width: 150,
+
     render: (_, record) => {
       const { name, lastName } = record
       const namesParts = [name, lastName].filter(Boolean) // Filter out empty values
@@ -108,6 +108,8 @@ const App = () => {
       columns={columns}
       dataSource={userList.map((item) => ({ ...item, key: item._id }))}
       bordered
+      showHeader={true}
+      sticky={true}
       footer={() => 'Footer'}
       pagination={false}
       loading={isLoading}
