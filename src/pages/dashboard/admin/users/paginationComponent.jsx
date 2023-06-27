@@ -17,7 +17,7 @@ const PaginationComponent = () => {
         showSizeChanger
         onShowSizeChange={onShowSizeChange}
         onChange={onChange}
-        defaultCurrent={page}
+        current={page}
         total={totalCount}
       />
     </div>
