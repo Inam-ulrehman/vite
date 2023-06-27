@@ -2,13 +2,30 @@ import { Button, Space, Table, Tooltip } from 'antd'
 import { UserOutlined, CrownOutlined } from '@ant-design/icons'
 import { useSelector } from 'react-redux'
 const columns = [
+  // {
+  //   title: 'Name',
+  //   dataIndex: 'name',
+  //   key: 'name',
+  //   render: (text) => <a>{text}</a>,
+  //   ellipsis: true,
+  //   width: 150,
+  // },
   {
     title: 'Name',
-    dataIndex: 'name',
+    dataIndex: ['name', 'lastName'], // Array of field names
     key: 'name',
-    render: (text) => <a>{text}</a>,
+    responsive: ['md'],
     ellipsis: true,
     width: 150,
+    render: (_, record) => {
+      const { name, lastName } = record
+      const namesParts = [name, lastName].filter(Boolean) // Filter out empty values
+      const capitalizedParts = namesParts.map(
+        (part) => part.charAt(0).toUpperCase() + part.slice(1)
+      ) // Capitalize first letter
+      const names = capitalizedParts.join(' ')
+      return <a>{names}</a>
+    },
   },
   {
     title: 'Email',
