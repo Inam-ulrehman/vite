@@ -1,39 +1,28 @@
 import { DownOutlined } from '@ant-design/icons'
 import { Button, Dropdown, Space, message } from 'antd'
-import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getStateValues } from '../../../../../features/users/adminUserSlice'
 
 const SortComponent = () => {
   const dispatch = useDispatch()
-  const [sortOrder, setSortOrder] = useState(null)
-  const [sortBy, setSortBy] = useState(null)
-
+  const { sort } = useSelector((state) => state.adminUsers)
   const handleMenuClick = (e) => {
     dispatch(getStateValues({ name: 'page', value: 1 }))
     if (e.key === 'name') {
       dispatch(getStateValues({ name: 'sort', value: 'name' }))
-      setSortBy('name')
     } else if (e.key === '-name') {
       dispatch(getStateValues({ name: 'sort', value: '-name' }))
-      setSortBy('-name')
     } else if (e.key === 'createdAt') {
       dispatch(getStateValues({ name: 'sort', value: 'createdAt' }))
-      setSortBy('createdAt')
     } else if (e.key === '-createdAt') {
       dispatch(getStateValues({ name: 'sort', value: '-createdAt' }))
-      setSortBy('-createdAt')
     } else if (e.key === 'active') {
       dispatch(getStateValues({ name: 'sort', value: 'active' }))
-      setSortBy('status')
     } else if (e.key === '-active') {
       dispatch(getStateValues({ name: 'sort', value: '-active' }))
-      setSortBy('-active')
     } else {
       message.error('Something went wrong')
     }
-
-    setSortOrder(e.key)
   }
 
   const sortOptions = [
@@ -47,7 +36,7 @@ const SortComponent = () => {
 
   const sortedOptions = [...sortOptions].map((option) => {
     let label = option.label
-    if (option.key === sortOrder) {
+    if (option.key === sort) {
       label = <strong>{label}</strong>
     }
     return {
