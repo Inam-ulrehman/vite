@@ -27,7 +27,7 @@ const columns = [
     title: 'Email',
     dataIndex: 'email',
     key: 'email',
-    responsive: ['md'],
+    responsive: ['lg'],
     ellipsis: true,
     width: 150,
     render: (email) => {
@@ -42,7 +42,7 @@ const columns = [
     title: 'Mobile',
     dataIndex: 'mobile',
     key: 'mobile',
-    responsive: ['md'],
+    responsive: ['lg'],
     ellipsis: true,
     width: 150,
     render: (mobile) => {
@@ -57,7 +57,7 @@ const columns = [
     title: 'Address',
     dataIndex: ['city', 'country'], // Array of field names
     key: 'address',
-    responsive: ['md'],
+    responsive: ['lg'],
     ellipsis: true,
     width: 150,
     render: (_, record) => {
