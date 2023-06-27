@@ -18,6 +18,7 @@ import LayoutAdminDashboard from './pages/dashboard/admin/LayoutAdminDashboard'
 import ContactSubmissions from './pages/dashboard/admin/contact/page'
 import ContactDetails from './pages/dashboard/settings/contact-details/page'
 import ChangePassword from './pages/dashboard/settings/change-password/page'
+import AdminSingleUser from './pages/dashboard/admin/users/singleUser/page'
 
 // ==================>>>>>> Routes Config
 
@@ -64,6 +65,10 @@ const RoutesConfig = () => {
             >
               <Route index element={<Admin />} />
               <Route path='/dashboard/admin/users' element={<AdminUsers />} />
+              <Route
+                path='/dashboard/admin/users/:id'
+                element={<AdminSingleUser />}
+              />
               <Route
                 path='/dashboard/admin/contact-submissions'
                 element={<ContactSubmissions />}
