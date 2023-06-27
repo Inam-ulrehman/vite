@@ -31,7 +31,7 @@ const Wrapper = styled.div`
   }
 
   /* Mobile  */
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     .navbar {
       // how to make it sticky on mobile
       position: sticky;
