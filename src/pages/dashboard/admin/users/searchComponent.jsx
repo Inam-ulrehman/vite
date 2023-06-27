@@ -8,6 +8,8 @@ const SearchComponent = () => {
   const { Search } = Input
   const handleChange = (e) => {
     dispatch(getStateValues({ name: 'search', value: e.target.value }))
+    dispatch(getStateValues({ name: 'page', value: 1 }))
+    dispatch(getStateValues({ name: 'limit', value: 10 }))
   }
 
   return (
