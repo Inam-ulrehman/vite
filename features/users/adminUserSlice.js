@@ -11,6 +11,7 @@ const initialState = {
   page: 1,
   limit: 10,
   countOnPage: 0,
+  totalData: 0,
   totalCount: 0,
   totalPages: 0,
   currentPage: 1,
@@ -94,6 +95,7 @@ const adminUsersSlice = createSlice({
         state.totalCount = payload.totalCount
         state.totalPages = payload.totalPages
         state.currentPage = payload.currentPage
+        state.totalData = payload.totalData
         state.isLoading = false
       })
       .addCase(adminGetAllUsersThunk.rejected, (state, { payload }) => {

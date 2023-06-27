@@ -5,6 +5,7 @@ import TableComponent from './tableComponent'
 import SearchComponent from './searchComponent'
 import SortComponent from './sortComponent'
 import { styled } from 'styled-components'
+import DataIndex from './dataIndex'
 
 const AdminUsers = () => {
   const dispatch = useDispatch()
@@ -19,6 +20,7 @@ const AdminUsers = () => {
       <div className='search-sort'>
         <SearchComponent />
         <SortComponent />
+        <DataIndex />
       </div>
       <TableComponent />
     </Wrapper>
