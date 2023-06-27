@@ -16,7 +16,11 @@ const columns = [
         (part) => part.charAt(0).toUpperCase() + part.slice(1)
       ) // Capitalize first letter
       const names = capitalizedParts.join(' ')
-      return <a>{names}</a>
+      return (
+        <Tooltip title={names}>
+          <a>{names}</a>
+        </Tooltip>
+      )
     },
   },
   {
@@ -26,6 +30,13 @@ const columns = [
     responsive: ['md'],
     ellipsis: true,
     width: 150,
+    render: (email) => {
+      return (
+        <Tooltip title={email}>
+          <span>{email}</span>
+        </Tooltip>
+      )
+    },
   },
   {
     title: 'Mobile',
@@ -34,6 +45,13 @@ const columns = [
     responsive: ['md'],
     ellipsis: true,
     width: 150,
+    render: (mobile) => {
+      return (
+        <Tooltip title={mobile}>
+          <span>{mobile}</span>
+        </Tooltip>
+      )
+    },
   },
   {
     title: 'Address',
@@ -49,7 +67,7 @@ const columns = [
         (part) => part.charAt(0).toUpperCase() + part.slice(1)
       ) // Capitalize first letter
       const address = capitalizedParts.join(', ')
-      return <span>{address}</span>
+      return <Tooltip title={address}>{address}</Tooltip>
     },
   },
   {
