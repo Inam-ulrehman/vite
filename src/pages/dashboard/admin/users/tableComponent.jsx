@@ -2,6 +2,7 @@ import { Button, Table, Tooltip } from 'antd'
 import { UserOutlined, CrownOutlined, EditOutlined } from '@ant-design/icons'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import PaginationComponent from './paginationComponent'
 const columns = [
   {
     title: 'Name',
@@ -165,7 +166,7 @@ const App = () => {
       bordered
       showHeader={true}
       sticky={true}
-      footer={() => 'Footer'}
+      footer={() => <PaginationComponent />}
       pagination={false}
       loading={isLoading}
     />
