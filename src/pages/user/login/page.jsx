@@ -20,16 +20,19 @@ const Login = () => {
 
   const onFinish = async (values) => {
     setState({ ...state, isLoading: true })
+
     try {
       const response = await customFetch.post('users/login', values)
+      console.log(response)
       setState({ ...state, isLoading: false })
-      const { name, role, token } = response.data
+      const { firstName, role, token } = response.data
+
       // set cookies for 7 days
       Cookies.set('token', token, { expires: 7 })
-      Cookies.set('name', name, { expires: 7 })
+      Cookies.set('name', firstName, { expires: 7 })
       Cookies.set('role', role, { expires: 7 })
       // redirect to Dashboard page
-      window.location.href = '/dashboard'
+      // window.location.href = '/dashboard'
     } catch (error) {
       setState({ ...state, isLoading: false })
       notification.error({

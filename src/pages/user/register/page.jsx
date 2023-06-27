@@ -22,10 +22,10 @@ const Register = () => {
       const response = await customFetch.post('users', values)
       setState({ ...state, isLoading: false })
       message.success('Registration Successful!')
-      const { name, role, token } = response.data
+      const { firstName, role, token } = response.data
       // set cookies
       Cookies.set('token', token, { expires: 7 })
-      Cookies.set('name', name, { expires: 7 })
+      Cookies.set('name', firstName, { expires: 7 })
       Cookies.set('role', role, { expires: 7 })
       // redirect to home page
       window.location.href = '/dashboard'
@@ -48,7 +48,7 @@ const Register = () => {
       >
         <Title level={2}>Register</Title>
         <Form.Item
-          name='name'
+          name='firstName'
           rules={[
             {
               required: true,

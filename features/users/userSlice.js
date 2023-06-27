@@ -7,9 +7,10 @@ import { addObjectInState } from '../../lib/helper'
 const initialState = {
   // ========>>>> User Profile
   _id: '',
-  name: Cookies.get('name') ? Cookies.get('name') : '',
+  firstName: Cookies.get('firstName') ? Cookies.get('firstName') : '',
   lastName: '',
-  mobile: '',
+  cellPhone: '',
+  homePhone: '',
   email: '',
   role: Cookies.get('role') ? Cookies.get('role') : 'user',
   gender: '',
@@ -46,7 +47,7 @@ export const usersThunk = createAsyncThunk(
   }
 )
 
-//  ================>>>>>>>>> User Profile <<<<<<<<<<==================
+//  ================>>>>>>>>> User Profile with Token <<<<<<<<<<==================
 export const userProfileThunk = createAsyncThunk(
   'users/userProfileThunk',
   async (_, thunkAPI) => {
@@ -59,7 +60,7 @@ export const userProfileThunk = createAsyncThunk(
     }
   }
 )
-//  ================>>>>>>>>> User Profile Update <<<<<<<<<<==================
+//  ================>>>>>>>>> User Profile Update with token <<<<<<<<<<==================
 export const userProfileUpdateThunk = createAsyncThunk(
   'users/userProfileUpdateThunk',
   async (state, thunkAPI) => {
