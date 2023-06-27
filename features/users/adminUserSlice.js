@@ -7,6 +7,12 @@ const initialState = {
   lastName: '',
   email: '',
   userList: [],
+  search: '',
+  page: 1,
+  limit: 15,
+  totalCount: 0,
+  countOnPage: 0,
+  sort: '-createdAt',
   isLoading: false,
 }
 export const adminUsersThunk = createAsyncThunk(
@@ -25,8 +31,12 @@ export const adminUsersThunk = createAsyncThunk(
 export const adminGetAllUsersThunk = createAsyncThunk(
   'adminUsers/adminGetAllUsersThunk',
   async (_, thunkAPI) => {
+    const { search, page, limit } = thunkAPI.getState().adminUsers
+    console.log('search', search, 'page', page, 'limit', limit)
     try {
-      const response = await customFetch('/users')
+      const response = await customFetch(
+        `users?search=${search}&page=${page}&limit=${limit}`
+      )
 
       return response.data
     } catch (error) {
