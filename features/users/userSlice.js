@@ -20,14 +20,16 @@ const initialState = {
   verified: '',
   location: '',
   // ========>>>> User Address
-  apartment: '',
-  house: '',
-  street: '',
-  city: '',
-  region: '',
-  province: '',
-  country: '',
-  postalCode: '',
+  address: {
+    apartment: '',
+    house: '',
+    street: '',
+    city: '',
+    region: '',
+    province: '',
+    country: '',
+    postalCode: '',
+  },
   // ========>>>> User Social
   createdAt: '',
   updatedAt: '',
@@ -66,9 +68,16 @@ export const userProfileThunk = createAsyncThunk(
 export const userProfileUpdateThunk = createAsyncThunk(
   'users/userProfileUpdateThunk',
   async (state, thunkAPI) => {
+    if (state.address) {
+      state.address = JSON.stringify(state.address)
+    }
+    if (state.location) {
+      state.location = JSON.stringify(state.location)
+    }
     try {
       const response = await customFetch.put('users/profile', state)
       toast.success(response.data.message)
+      console.log(response.data)
       return response.data
     } catch (error) {
       toast.error(error.response.data.message || 'Something went wrong')
@@ -86,7 +95,6 @@ const usersSlice = createSlice({
     // },
     getStateValues: (state, { payload }) => {
       const { name, value } = payload
-
       state[name] = value
     },
     clearState: (state) => {

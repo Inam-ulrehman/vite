@@ -37,7 +37,7 @@ const CellPhone = () => {
           className='mobile-input'
           defaultCountry='CA'
           country='CA'
-          placeholder='416-123-4567'
+          placeholder='555-123-4567'
           value={formatPhoneNumberIntl(cellPhone)}
           onChange={handleChange}
         />

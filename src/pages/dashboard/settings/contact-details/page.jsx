@@ -14,10 +14,10 @@ import ApiLoading from '../../../../components/singleComponent/apiLoading'
 import CellPhone from './form-cellPhone'
 
 const ContactDetails = () => {
+  const { email, cellPhone, homePhone, address, isLoading, isUpdating } =
+    useSelector((state) => state.user)
+
   const {
-    email,
-    cellPhone,
-    homePhone,
     apartment,
     house,
     street,
@@ -26,19 +26,13 @@ const ContactDetails = () => {
     province,
     country,
     postalCode,
-    isLoading,
-    isUpdating,
-  } = useSelector((state) => state.user)
+  } = address
 
   const dispatch = useDispatch()
 
   const onFinish = async () => {
     const updatedProfile = {}
-    if (postalCode) {
-      const data = await getPostalCodeCoordinates(postalCode)
-      updatedProfile.location = JSON.stringify(data)
-      updatedProfile.postalCode = postalCode
-    }
+
     if (email) {
       updatedProfile.email = email
     }
@@ -48,31 +42,15 @@ const ContactDetails = () => {
     if (homePhone) {
       updatedProfile.homePhone = homePhone
     }
-    if (apartment) {
-      updatedProfile.apartment = apartment
-    }
-    if (house) {
-      updatedProfile.house = house
-    }
-    if (street) {
-      updatedProfile.street = street
-    }
-    if (city) {
-      updatedProfile.city = city
-    }
-    if (region) {
-      updatedProfile.region = region
-    }
-    if (province) {
-      updatedProfile.province = province
-    }
-    if (country) {
-      updatedProfile.country = country
-    }
+
     if (postalCode) {
-      updatedProfile.postalCode = postalCode
+      const data = await getPostalCodeCoordinates(postalCode)
+      updatedProfile.location = data
     }
-    console.log(updatedProfile)
+    if (address) {
+      updatedProfile.address = address
+    }
+
     dispatch(userProfileUpdateThunk(updatedProfile))
   }
   const onFinishFailed = (errorInfo) => {
@@ -81,7 +59,16 @@ const ContactDetails = () => {
   const handleChange = (e) => {
     const name = e.target.name
     const value = e.target.value
-    dispatch(getStateValues({ name, value }))
+    if (name === 'email' || name === 'cellPhone' || name === 'homePhone') {
+      dispatch(getStateValues({ name, value }))
+    } else {
+      dispatch(
+        getStateValues({
+          name: 'address',
+          value: { ...address, [name]: value },
+        })
+      )
+    }
   }
 
   // get data from server and set it to state
