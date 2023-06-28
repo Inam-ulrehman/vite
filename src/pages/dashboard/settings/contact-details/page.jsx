@@ -1,6 +1,5 @@
 import { Button, Form, Input } from 'antd'
 import { styled } from 'styled-components'
-import FormMobile from './form-mobile'
 import { useEffect } from 'react'
 import GooglePlacesHook from './googlePlacesHook'
 import { useDispatch, useSelector } from 'react-redux'
@@ -12,11 +11,13 @@ import {
 import getPostalCodeCoordinates from './getPostalCodeCoordinates'
 
 import ApiLoading from '../../../../components/singleComponent/apiLoading'
+import CellPhone from './form-cellPhone'
 
 const ContactDetails = () => {
   const {
     email,
-    mobile,
+    cellPhone,
+    homePhone,
     apartment,
     house,
     street,
@@ -32,26 +33,47 @@ const ContactDetails = () => {
   const dispatch = useDispatch()
 
   const onFinish = async () => {
-    let location = null
+    const updatedProfile = {}
     if (postalCode) {
       const data = await getPostalCodeCoordinates(postalCode)
-      location = JSON.stringify(data)
+      updatedProfile.location = JSON.stringify(data)
+      updatedProfile.postalCode = postalCode
     }
-    dispatch(
-      userProfileUpdateThunk({
-        email,
-        mobile,
-        apartment,
-        house,
-        street,
-        city,
-        region,
-        province,
-        country,
-        postalCode,
-        location,
-      })
-    )
+    if (email) {
+      updatedProfile.email = email
+    }
+    if (cellPhone) {
+      updatedProfile.cellPhone = cellPhone
+    }
+    if (homePhone) {
+      updatedProfile.homePhone = homePhone
+    }
+    if (apartment) {
+      updatedProfile.apartment = apartment
+    }
+    if (house) {
+      updatedProfile.house = house
+    }
+    if (street) {
+      updatedProfile.street = street
+    }
+    if (city) {
+      updatedProfile.city = city
+    }
+    if (region) {
+      updatedProfile.region = region
+    }
+    if (province) {
+      updatedProfile.province = province
+    }
+    if (country) {
+      updatedProfile.country = country
+    }
+    if (postalCode) {
+      updatedProfile.postalCode = postalCode
+    }
+    console.log(updatedProfile)
+    dispatch(userProfileUpdateThunk(updatedProfile))
   }
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo)
@@ -82,7 +104,7 @@ const ContactDetails = () => {
         autoComplete='off'
         initialValues={{
           email,
-          mobile,
+          cellPhone,
           apartment,
           house,
           street,
@@ -114,8 +136,8 @@ const ContactDetails = () => {
             />
           </Form.Item>
         </div>
-        {/* mobile */}
-        <FormMobile />
+        {/* cellPhone */}
+        <CellPhone />
 
         {/* Search Address */}
         <div>

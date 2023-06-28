@@ -7,8 +7,8 @@ import { isPossiblePhoneNumber } from 'react-phone-number-input'
 import { useDispatch, useSelector } from 'react-redux'
 import { getStateValues } from '../../../../../features/users/userSlice'
 
-const MobileNumberForm = () => {
-  const { mobile } = useSelector((state) => state.user)
+const CellPhone = () => {
+  const { cellPhone } = useSelector((state) => state.user)
   const dispatch = useDispatch()
   const [error, setError] = useState('')
 
@@ -16,29 +16,29 @@ const MobileNumberForm = () => {
   const handleChange = (e) => {
     if (e !== undefined) {
       const value = e
-      dispatch(getStateValues({ name: 'mobile', value }))
+      dispatch(getStateValues({ name: 'cellPhone', value }))
     }
   }
 
   useEffect(() => {
-    if (mobile) {
-      if (!isPossiblePhoneNumber(mobile)) {
+    if (cellPhone) {
+      if (!isPossiblePhoneNumber(cellPhone)) {
         setError('Invalid phone number')
       } else {
         setError('')
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mobile])
+  }, [cellPhone])
   return (
     <Wrapper>
-      <Form.Item label='Mobile'>
+      <Form.Item label='Cell Phone'>
         <PhoneInput
           className='mobile-input'
           defaultCountry='CA'
           country='CA'
-          placeholder='Enter phone number'
-          value={formatPhoneNumberIntl(mobile)}
+          placeholder='416-123-4567'
+          value={formatPhoneNumberIntl(cellPhone)}
           onChange={handleChange}
         />
         {error && <p style={{ color: 'red', margin: '0px' }}>{error}</p>}
@@ -76,4 +76,4 @@ const Wrapper = styled.div`
     }
   }
 `
-export default MobileNumberForm
+export default CellPhone
