@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 import { styled } from 'styled-components'
 
 const DataIndex = () => {
-  const { totalData, page, totalCount } = useSelector(
+  const { totalData, page, totalCount, search } = useSelector(
     (state) => state.adminUsers
   )
   return (
@@ -19,9 +19,11 @@ const DataIndex = () => {
         Page: <span className='span'>{page}</span>
       </Button>
 
-      <Button size='large' icon={<FileSearchOutlined />}>
-        Search Result: <span className='span'>{totalCount}</span>
-      </Button>
+      {search && (
+        <Button size='large' icon={<FileSearchOutlined />}>
+          Search Results: <span className='span'>{totalCount}</span>
+        </Button>
+      )}
     </Wrapper>
   )
 }
