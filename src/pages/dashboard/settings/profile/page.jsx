@@ -12,14 +12,28 @@ import {
 import ApiLoading from '../../../../components/singleComponent/apiLoading'
 
 const Profile = () => {
-  const { name, lastName, dob, gender, isLoading, isUpdating } = useSelector(
-    (state) => state.user
-  )
+  const { firstName, lastName, dob, gender, isLoading, isUpdating } =
+    useSelector((state) => state.user)
 
   const dispatch = useDispatch()
 
   const onFinish = async () => {
-    dispatch(userProfileUpdateThunk({ name, lastName, dob, gender }))
+    const updatedProfile = {}
+
+    if (firstName) {
+      updatedProfile.firstName = firstName
+    }
+    if (lastName) {
+      updatedProfile.lastName = lastName
+    }
+    if (dob) {
+      updatedProfile.dob = dob
+    }
+    if (gender) {
+      updatedProfile.gender = gender
+    }
+
+    dispatch(userProfileUpdateThunk(updatedProfile))
   }
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo)
@@ -44,14 +58,14 @@ const Profile = () => {
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         autoComplete='off'
-        initialValues={{ name, lastName, gender, dob }}
+        initialValues={{ firstName, lastName, gender, dob }}
       >
         <h1>Profile</h1>
 
         {/* name */}
         <Form.Item
           label='Name'
-          name='name'
+          name='firstName'
           // how to add initial value to form item
 
           rules={[
@@ -62,9 +76,9 @@ const Profile = () => {
           ]}
         >
           <Input
-            name='name'
+            name='firstName'
             size='large'
-            value={name}
+            value={firstName}
             onChange={handleChange}
           />
         </Form.Item>
@@ -111,9 +125,7 @@ const Wrapper = styled.div`
   label {
     width: 110px;
   }
-  input {
-    text-transform: capitalize;
-  }
+
   /* Mobile */
   @media (max-width: 580px) {
     .ant-form-item {

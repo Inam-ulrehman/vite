@@ -7,7 +7,7 @@ import { addObjectInState } from '../../lib/helper'
 const initialState = {
   // ========>>>> User Profile
   _id: '',
-  firstName: Cookies.get('firstName') ? Cookies.get('firstName') : '',
+  firstName: Cookies.get('name') ? Cookies.get('name') : '',
   lastName: '',
   cellPhone: '',
   homePhone: '',
@@ -16,6 +16,7 @@ const initialState = {
   gender: '',
   dob: '',
   active: '',
+  subscription: '',
   verified: '',
   location: '',
   // ========>>>> User Address
@@ -53,6 +54,7 @@ export const userProfileThunk = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await customFetch('users/profile')
+
       return response.data
     } catch (error) {
       toast.error(error.response.data.message || 'Something went wrong')
@@ -111,12 +113,13 @@ const usersSlice = createSlice({
         console.log(payload)
         state.isLoading = false
       })
-      //  ================>>>>>>>>> User Profile <<<<<<<<<<==================
+      //  ================>>>>>>>>> User Profile with token <<<<<<<<<<==================
       .addCase(userProfileThunk.pending, (state) => {
         state.isLoading = true
       })
       .addCase(userProfileThunk.fulfilled, (state, { payload }) => {
         addObjectInState(payload.result, state)
+
         state.isLoading = false
       })
       .addCase(userProfileThunk.rejected, (state, { payload }) => {
@@ -124,12 +127,13 @@ const usersSlice = createSlice({
         console.log(payload)
         state.isLoading = false
       })
-      //  ================>>>>>>>>> User Profile update <<<<<<<<<<==================
+      //  ================>>>>>>>>> User Profile update with token <<<<<<<<<<==================
       .addCase(userProfileUpdateThunk.pending, (state) => {
         state.isUpdating = true
       })
       .addCase(userProfileUpdateThunk.fulfilled, (state, { payload }) => {
         addObjectInState(payload.result, state)
+        toast.success(payload)
         state.isUpdating = false
       })
       .addCase(userProfileUpdateThunk.rejected, (state, { payload }) => {
