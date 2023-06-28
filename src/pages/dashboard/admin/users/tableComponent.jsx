@@ -48,6 +48,7 @@ const columns = [
     ellipsis: true,
     width: 150,
     render: (mobile) => {
+      if (!mobile) return <span>-</span>
       return (
         <Tooltip title={mobile}>
           <span>{mobile}</span>
@@ -63,8 +64,8 @@ const columns = [
     ellipsis: true,
     width: 150,
     render: (_, record) => {
-      console.log(record)
-      const { city, country } = record.address
+      if (!record?.address) return <span>-</span>
+      const { city, country } = record?.address
       const addressParts = [city, country].filter(Boolean) // Filter out empty values
       const capitalizedParts = addressParts.map(
         (part) => part.charAt(0).toUpperCase() + part.slice(1)
