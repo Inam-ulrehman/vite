@@ -65,7 +65,7 @@ const columns = [
     width: 150,
     render: (_, record) => {
       if (!record?.address) return <span>-</span>
-      const { city, country } = record?.address
+      const { city, country } = record.address
       const addressParts = [city, country].filter(Boolean) // Filter out empty values
       const capitalizedParts = addressParts.map(
         (part) => part.charAt(0).toUpperCase() + part.slice(1)
