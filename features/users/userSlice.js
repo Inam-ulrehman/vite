@@ -77,7 +77,6 @@ export const userProfileUpdateThunk = createAsyncThunk(
     try {
       const response = await customFetch.put('users/profile', state)
       toast.success(response.data.message)
-      console.log(response.data)
       return response.data
     } catch (error) {
       toast.error(error.response.data.message || 'Something went wrong')

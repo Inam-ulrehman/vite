@@ -78,6 +78,7 @@ const ContactDetails = () => {
   }, [])
   useEffect(() => {
     form.setFieldsValue({ email }) // Update the email field value in the form
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [email])
   const [form] = Form.useForm()
   if (isLoading) return <ApiLoading />

@@ -58,11 +58,6 @@ const PlacesAutocomplete = () => {
     //   console.log('📍 Coordinates: ', { lat, lng })
     // })
     const results = await getGeocode({ address })
-    const { lat, lng } = getLatLng(results[0])
-    const location = {
-      type: 'Point',
-      coordinates: [lng, lat],
-    }
 
     // Setting state code=======Start
     const addressDetails = results[0]
@@ -71,33 +66,25 @@ const PlacesAutocomplete = () => {
     const startLength = address_components.length - 5
     // We Slice because last 5 values are important also some times array is not returning same values.
     const lastAddress = address_components.slice(startLength, length)
-
-    dispatch(
-      getStateValues({ name: 'house', value: address_components[0]?.long_name })
-    )
-    dispatch(
-      getStateValues({
-        name: 'street',
-        value: address_components[1]?.long_name,
-      })
-    )
-    dispatch(getStateValues({ name: 'city', value: lastAddress[0]?.long_name }))
-    dispatch(
-      getStateValues({ name: 'region', value: lastAddress[1]?.long_name })
-    )
-    dispatch(
-      getStateValues({ name: 'province', value: lastAddress[2]?.long_name })
-    )
-    dispatch(
-      getStateValues({ name: 'country', value: lastAddress[3]?.long_name })
-    )
-    dispatch(
-      getStateValues({ name: 'postalCode', value: lastAddress[4]?.long_name })
-    )
-
-    dispatch(
-      getStateValues({ name: 'location', value: JSON.stringify(location) })
-    )
+    const apartment = address_components[0]?.long_name
+    const house = address_components[0]?.long_name
+    const street = address_components[1]?.long_name
+    const city = lastAddress[0]?.long_name
+    const region = lastAddress[1]?.long_name
+    const province = lastAddress[2]?.long_name
+    const country = lastAddress[3]?.long_name
+    const postalCode = lastAddress[4]?.long_name
+    const addressObj = {
+      apartment: apartment,
+      house: house,
+      street: street,
+      city: city,
+      region: region,
+      province: province,
+      country: country,
+      postalCode: postalCode,
+    }
+    dispatch(getStateValues({ name: 'address', value: addressObj }))
     //
   }
   // state code=======End
