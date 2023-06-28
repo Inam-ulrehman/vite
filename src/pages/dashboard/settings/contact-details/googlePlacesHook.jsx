@@ -75,7 +75,6 @@ const PlacesAutocomplete = () => {
     const country = lastAddress[3]?.long_name
     const postalCode = lastAddress[4]?.long_name
     const addressObj = {
-      apartment: apartment,
       house: house,
       street: street,
       city: city,

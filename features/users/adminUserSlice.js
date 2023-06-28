@@ -3,7 +3,7 @@ import { customFetch } from '../../lib/axios/customFetch'
 import { toast } from 'react-toastify'
 
 const initialState = {
-  name: '',
+  firstName: '',
   lastName: '',
   email: '',
   userList: [],
