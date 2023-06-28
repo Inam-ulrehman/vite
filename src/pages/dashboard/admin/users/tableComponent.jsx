@@ -6,14 +6,14 @@ import PaginationComponent from './paginationComponent'
 const columns = [
   {
     title: 'Name',
-    dataIndex: ['name', 'lastName'], // Array of field names
-    key: 'name',
+    dataIndex: ['firstName', 'lastName'], // Array of field names
+    key: 'firstName',
     ellipsis: true,
     width: 150,
 
     render: (_, record) => {
-      const { name, lastName } = record
-      const namesParts = [name, lastName].filter(Boolean) // Filter out empty values
+      const { firstName, lastName } = record
+      const namesParts = [firstName, lastName].filter(Boolean) // Filter out empty values
       const capitalizedParts = namesParts.map(
         (part) => part.charAt(0).toUpperCase() + part.slice(1)
       ) // Capitalize first letter
@@ -41,9 +41,9 @@ const columns = [
     },
   },
   {
-    title: 'Mobile',
-    dataIndex: 'mobile',
-    key: 'mobile',
+    title: 'Cell Phone',
+    dataIndex: 'cellPhone',
+    key: 'cellPhone',
     responsive: ['lg'],
     ellipsis: true,
     width: 150,
@@ -63,7 +63,8 @@ const columns = [
     ellipsis: true,
     width: 150,
     render: (_, record) => {
-      const { city, country } = record
+      console.log(record)
+      const { city, country } = record.address
       const addressParts = [city, country].filter(Boolean) // Filter out empty values
       const capitalizedParts = addressParts.map(
         (part) => part.charAt(0).toUpperCase() + part.slice(1)
@@ -110,7 +111,7 @@ const columns = [
     key: 'age',
     dataIndex: 'createdAt',
     align: 'center',
-    width: 90,
+    width: 100,
     responsive: ['lg'],
     render: (createdAt) => {
       const currentDate = new Date()
